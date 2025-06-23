@@ -9,7 +9,7 @@
 // <br/>
 // <div style="text-align:center;">Coding-Academy Munich</div>
 // <br/>
-// <!-- 09 Isolation of Unit Tests.cpp -->
+// <!-- 02 Isolation of Unit Tests.cpp -->
 // <!-- slides/module_410_unit_testing/topic_160_test_isolation.cpp -->
 
 

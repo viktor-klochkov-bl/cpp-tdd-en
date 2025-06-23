@@ -82,69 +82,109 @@
 // - Automated implementation of spies
 // - Used to
 //   - check if a dependency is used correctly
+// %% [markdown]
+// ## Example: E-Commerce System
+//
+// We want to add an item to a shopping cart.
+//
+// - The `CartManager` is the class to be tested (System Under Test).
+// - It uses a `ProductPriceProvider` to get the price of an item (incoming dependency).
+// - It uses a `ShoppingCart` to add the item (outgoing dependency).
+//
+// First, we define the interfaces for our dependencies:
 
 // %%
-class DataSource
+class ProductPriceProvider
 {
 public:
-    virtual ~DataSource() = default;
-    virtual int get_value() = 0;
+    virtual ~ProductPriceProvider() = default;
+    virtual double get_price(const std::string& product_id) = 0;
 };
 
 // %%
-class DataSink
+class ShoppingCart
 {
 public:
-    virtual ~DataSink() = default;
-    virtual void set_value(int value) = 0;
+    virtual ~ShoppingCart() = default;
+    virtual void add_item(const std::string& product_id, double price) = 0;
 };
 
-// %%
-struct Processor
-{
-    DataSource& source;
-    DataSink& sink;
+// %% [markdown]
+//
+// ## The Class Under Test: `CartManager`
+//
+// The `CartManager` gets the price and adds the item to the cart.
 
-    void process()
+// %%
+struct CartManager
+{
+    ProductPriceProvider& price_provider;
+    ShoppingCart& cart;
+
+    void add_to_cart(const std::string& product_id)
     {
-        int value = source.get_value();
-        sink.set_value(value);
+        double price = price_provider.get_price(product_id);
+        cart.add_item(product_id, price);
     }
 };
 
+// %% [markdown]
+//
+// ## The Test Doubles: Stub and Spy
+//
+// - For the `ProductPriceProvider` we use a **Stub** that returns a fixed price.
+// - For the `ShoppingCart` we use a **Spy** that records which items were added.
+
 // %%
-class DataSourceStub : public DataSource
+class ProductPriceProviderStub : public ProductPriceProvider
 {
 public:
-    int get_value() override { return 42; }
+    double get_price(const std::string& product_id) override { return 99.99; }
 };
 
 // %%
-class DataSinkSpy : public DataSink
+class ShoppingCartSpy : public ShoppingCart
 {
 public:
-    std::vector<int> values;
-    void set_value(int value) override { this->values.push_back(value); }
+    struct AddedItem {
+        std::string product_id;
+        double price;
+    };
+    std::vector<AddedItem> items;
+
+    void add_item(const std::string& product_id, double price) override
+    {
+        items.push_back({product_id, price});
+    }
 };
+
+// %% [markdown]
+//
+// In the test, we verify that the `CartManager` used the `ShoppingCart`
+// correctly.
 
 // %%
 #include "check.h"
+#include <string>
+#include <vector>
 
 // %%
-void test_processor()
+void test_cart_manager_adds_item_with_correct_price()
 {
-    DataSourceStub source;
-    DataSinkSpy sink;
-    Processor processor{source, sink};
+    ProductPriceProviderStub price_provider; // Our Stub
+    ShoppingCartSpy cart;                    // Our Spy
+    CartManager manager{price_provider, cart};
+    const std::string product_id = "book-123";
 
-    processor.process();
+    manager.add_to_cart(product_id);
 
-    check(sink.values.size() == 1);
-    check(sink.values[0] == 42);
+    check(cart.items.size() == 1);
+    check(cart.items[0].product_id == product_id);
+    check(cart.items[0].price == 99.99);
 }
 
 // %%
-test_processor();
+test_cart_manager_adds_item_with_correct_price();
 
 // %% [markdown]
 //
@@ -157,108 +197,176 @@ test_processor();
 
 // %% [markdown]
 //
-// ## Workshop: Test Doubles
+// ## Workshop: Testing a Spacecraft Controller
 //
-// We have the following interfaces, which are used by the function `test_me()`:
+// Your task is to implement a test suite for a `SpacecraftCommandController`.
+// This class sends commands to a spacecraft. Its responsibilities are:
+//
+// - Mission safety is paramount: Check the system status (`TelemetrySystem`)
+//   before executing commands.
+// - Execute maneuvers with the thrusters (`ThrusterControl`).
+// - Notify ground control about command status (`GroundControlLink`).
+
+// %% [markdown]
+// First, the interfaces for the spacecraft's subsystems:
 
 // %%
-class Service1
-{
+#include <string>
+#include <vector>
+
+// %%
+enum class SubSystem { Core, Thrusters, ScienceBay };
+
+// %%
+class TelemetrySystem {
 public:
-    virtual ~Service1() = default;
-    virtual int get_value() = 0;
+    virtual ~TelemetrySystem() = default;
+    virtual int get_power_level_percent(SubSystem system) = 0;
 };
 
 // %%
-class Service2
-{
+class ThrusterControl {
 public:
-    virtual ~Service2() = default;
-    virtual void set_value(int value) = 0;
+    virtual ~ThrusterControl() = default;
+    virtual void fire_thrusters(int duration_ms) = 0;
 };
 
 // %%
-void test_me(int i, int j, Service1* service1, Service2* service2)
-{
-    int value{};
-    if (i > 0)
-    {
-        value = service1->get_value();
+class GroundControlLink {
+public:
+    virtual ~GroundControlLink() = default;
+    virtual void send_status_report(const std::string& report) = 0;
+};
+
+
+// %% [markdown]
+// The class under test: `SpacecraftCommandController`.
+
+// %%
+class SpacecraftCommandController {
+private:
+    TelemetrySystem& telemetry;
+    ThrusterControl& thrusters;
+    GroundControlLink& ground_control;
+
+public:
+    SpacecraftCommandController(TelemetrySystem& tel, ThrusterControl& thr, GroundControlLink& gc)
+        : telemetry(tel), thrusters(thr), ground_control(gc) {}
+
+    void execute_burn_maneuver(int duration_ms) {
+        int power_level = telemetry.get_power_level_percent(SubSystem::Thrusters);
+        if (power_level < 50) {
+            ground_control.send_status_report("ERROR: Thruster power too low for maneuver.");
+            return;
+        }
+
+        thrusters.fire_thrusters(duration_ms);
+        ground_control.send_status_report("SUCCESS: Maneuver executed.");
     }
-    if (j > 0)
-    {
-        service2->set_value(value);
+};
+
+// %% [markdown]
+//
+// ## Your Task
+//
+// Write tests for the following scenarios. Implement the necessary test
+// doubles.
+//
+// 1.  **Successful Maneuver:** The thruster system has sufficient power (>50%).
+//     Verify that the `fire_thrusters` command is sent and a success report is
+//     sent to ground control.
+// 2.  **Maneuver Aborted (Low Power):** The thruster system has insufficient
+//     power (<50%). Verify that the thrusters are **not** fired and an error
+//     report is sent to ground control.
+
+// %% [markdown]
+// ## Solution: Test Doubles
+//
+// We need a configurable stub for `TelemetrySystem` and spies for
+// `ThrusterControl` and `GroundControlLink`.
+
+// %%
+#include <map>
+
+// %%
+// A configurable stub for the telemetry system.
+class TelemetrySystemStub : public TelemetrySystem
+{
+public:
+    int power_level = 100;
+    int get_power_level_percent(SubSystem system) override { return power_level; }
+};
+
+// %%
+// A spy to record thruster commands.
+class ThrusterControlSpy : public ThrusterControl
+{
+public:
+    int burn_duration_ms = 0;
+    int times_fired = 0;
+
+    void fire_thrusters(int duration_ms) override {
+        times_fired++;
+        burn_duration_ms = duration_ms;
     }
-}
-
-// %% [markdown]
-//
-// What types of test doubles do you need to test the function `test_me()` for
-// the given values of `i` and `j`?
-//
-// | i | j | Service1 | Service2 |
-// |---|---|----------|----------|
-// | 0 | 0 |          |          |
-// | 0 | 1 |          |          |
-// | 1 | 0 |          |          |
-// | 1 | 1 |          |          |
-
-// %% [markdown]
-//
-// | i | j | Service1 | Service2 |
-// |---|---|----------|----------|
-// | 0 | 0 | Dummy    | Dummy    |
-// | 0 | 1 | Dummy    | Spy/Mock |
-// | 1 | 0 | Stub     | Dummy    |
-// | 1 | 1 | Stub     | Spy/Mock |
-
-// %% [markdown]
-//
-// Implement the corresponding doubles and write the tests
-
-// %%
-class Service1Stub : public Service1
-{
-public:
-    int get_value() override { return 42; }
 };
 
 // %%
-class Service2Spy : public Service2
+// A spy to record reports sent to ground control.
+class GroundControlLinkSpy : public GroundControlLink
 {
 public:
-    std::vector<int> values;
-    void set_value(int value) override { this->values.push_back(value); }
+    std::vector<std::string> reports;
+    void send_status_report(const std::string& report) override {
+        reports.push_back(report);
+    }
 };
 
 // %%
-void test_test_me_0_0()
+// ## Solution: Tests
+
+// %%
+#include "check.h"
+
+
+// %%
+void test_successful_burn_maneuver()
 {
-    test_me(0, 0, nullptr, nullptr);
+    TelemetrySystemStub telemetry;
+    telemetry.power_level = 75; // Set sufficient power
+
+    ThrusterControlSpy thrusters;
+    GroundControlLinkSpy ground_control;
+
+    SpacecraftCommandController controller{telemetry, thrusters, ground_control};
+
+    controller.execute_burn_maneuver(500);
+
+    check(thrusters.times_fired == 1);
+    check(thrusters.burn_duration_ms == 500);
+    check(ground_control.reports.size() == 1);
+    check(ground_control.reports[0] == "SUCCESS: Maneuver executed.");
 }
 
 // %%
-void test_test_me_0_1()
+void test_aborted_maneuver_due_to_low_power()
 {
-    Service2Spy service2;
-    test_me(0, 1, nullptr, &service2);
-    check(service2.values.size() == 1);
-    check(service2.values[0] == 0);
+    TelemetrySystemStub telemetry;
+    telemetry.power_level = 40; // Set insufficient power
+
+    ThrusterControlSpy thrusters;
+    GroundControlLinkSpy ground_control;
+
+    SpacecraftCommandController controller{telemetry, thrusters, ground_control};
+
+    controller.execute_burn_maneuver(500);
+
+    check(thrusters.times_fired == 0); // Thrusters should not be fired!
+    check(ground_control.reports.size() == 1);
+    check(ground_control.reports[0] == "ERROR: Thruster power too low for maneuver.");
 }
 
-// %%
-void test_test_me_1_0()
-{
-    Service1Stub service1;
-    test_me(1, 0, &service1, nullptr);
-}
 
 // %%
-void test_test_me_1_1()
-{
-    Service1Stub service1;
-    Service2Spy service2;
-    test_me(1, 1, &service1, &service2);
-    check(service2.values.size() == 1);
-    check(service2.values[0] == 42);
-}
+test_successful_burn_maneuver();
+test_aborted_maneuver_due_to_low_power();

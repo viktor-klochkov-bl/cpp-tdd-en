@@ -13211,7 +13211,90 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=fbe52effa16bf017">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=98da575680a292bc"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Example:-E-Commerce-System">Example: E-Commerce System<a class="anchor-link" href="#Example:-E-Commerce-System">¶</a></h2><p>We want to add an item to a shopping cart.</p>
+<ul>
+<li>The <code>CartManager</code> is the class to be tested (System Under Test).</li>
+<li>It uses a <code>ProductPriceProvider</code> to get the price of an item (incoming dependency).</li>
+<li>It uses a <code>ShoppingCart</code> to add the item (outgoing dependency).</li>
+</ul>
+<p>First, we define the interfaces for our dependencies:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=2003c3ec3b1f80dd">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-c++"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ProductPriceProvider</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">ProductPriceProvider</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">get_price</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">product_id</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=fea4e8414d1fffb0">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-c++"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ShoppingCart</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">ShoppingCart</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">add_item</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">product_id</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">price</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=8333ef1f4af38433"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-Class-Under-Test:-CartManager">The Class Under Test: <code>CartManager</code><a class="anchor-link" href="#The-Class-Under-Test:-CartManager">¶</a></h2><p>The <code>CartManager</code> gets the price and adds the item to the cart.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=af4b0bdb71ef7008">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-c++"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">CartManager</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">ProductPriceProvider</span><span class="o">&amp;</span><span class="w"> </span><span class="n">price_provider</span><span class="p">;</span>
+<span class="w">    </span><span class="n">ShoppingCart</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cart</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">add_to_cart</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">product_id</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">price</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">price_provider</span><span class="p">.</span><span class="n">get_price</span><span class="p">(</span><span class="n">product_id</span><span class="p">);</span>
+<span class="w">        </span><span class="n">cart</span><span class="p">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">product_id</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=c2203eaeb8704fa5"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-Test-Doubles:-Stub-and-Spy">The Test Doubles: Stub and Spy<a class="anchor-link" href="#The-Test-Doubles:-Stub-and-Spy">¶</a></h2><ul>
+<li>For the <code>ProductPriceProvider</code> we use a <strong>Stub</strong> that returns a fixed price.</li>
+<li>For the <code>ShoppingCart</code> we use a <strong>Spy</strong> that records which items were added.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=b4e521d480fe0014">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
@@ -13222,7 +13305,7 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=e35fd8bcf9fb7e3f">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=5ff3b89e7169cd03">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
@@ -13233,7 +13316,28 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=a4eeb7bfb084bf69">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=1c3ad81365c4c0a7"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the test, we verify that the <code>CartManager</code> used the <code>ShoppingCart</code>
+correctly.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=9f33a6f70b5e99b3">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-c++"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">"check.h"</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=b835c9653550d015">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
@@ -13244,51 +13348,7 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=c2206ff7bee7b9fd">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-c++"><pre><span></span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=d5c08b9b3ac64a93">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-c++"><pre><span></span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide" id="cell-id=0bf3e7003a28b76b">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-c++"><pre><span></span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=915aa933c34a2183">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-c++"><pre><span></span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=13261b167392393d">
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=a0d69f002fdbe0f3">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
@@ -13311,115 +13371,146 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=76f5dcd10b49426e"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=27a8f67f27ec9f1f"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Workshop:-Test-Doubles">Workshop: Test Doubles<a class="anchor-link" href="#Workshop:-Test-Doubles">¶</a></h2><p>We have the following interfaces, which are used by the function <code>test_me()</code>:</p>
+<h2 id="Workshop:-Testing-a-Spacecraft-Controller">Workshop: Testing a Spacecraft Controller<a class="anchor-link" href="#Workshop:-Testing-a-Spacecraft-Controller">¶</a></h2><p>Your task is to implement a test suite for a <code>SpacecraftCommandController</code>.
+This class sends commands to a spacecraft. Its responsibilities are:</p>
+<ul>
+<li>Mission safety is paramount: Check the system status (<code>TelemetrySystem</code>)
+before executing commands.</li>
+<li>Execute maneuvers with the thrusters (<code>ThrusterControl</code>).</li>
+<li>Notify ground control about command status (<code>GroundControlLink</code>).</li>
+</ul>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=16c48f0e02448673">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=5d6be89d7e90297d"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First, the interfaces for the spacecraft's subsystems:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=b403b2f3378bba10">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-c++"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Service1</span>
-<span class="p">{</span>
+<div class="highlight hl-c++"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=daccc59d810944b2">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-c++"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SubSystem</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Core</span><span class="p">,</span><span class="w"> </span><span class="n">Thrusters</span><span class="p">,</span><span class="w"> </span><span class="n">ScienceBay</span><span class="w"> </span><span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=cdaebfdcfc3e42fe">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-c++"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">TelemetrySystem</span><span class="w"> </span><span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
-<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">Service1</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
-<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">get_value</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">TelemetrySystem</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">get_power_level_percent</span><span class="p">(</span><span class="n">SubSystem</span><span class="w"> </span><span class="n">system</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=a26780bfb4dd3d37">
+<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=b68525005a3705c0">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-c++"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Service2</span>
-<span class="p">{</span>
+<div class="highlight hl-c++"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ThrusterControl</span><span class="w"> </span><span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
-<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">Service2</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
-<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">set_value</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">ThrusterControl</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">fire_thrusters</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">duration_ms</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep celltag_subslide" id="cell-id=119510166c89eac1">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=18e91f76715311f3">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-c++"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">test_me</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">Service1</span><span class="o">*</span><span class="w"> </span><span class="n">service1</span><span class="p">,</span><span class="w"> </span><span class="n">Service2</span><span class="o">*</span><span class="w"> </span><span class="n">service2</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">{};</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service1</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">service2</span><span class="o">-&gt;</span><span class="n">set_value</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight hl-c++"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">GroundControlLink</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">GroundControlLink</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">send_status_report</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">report</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=b0ab458a46c50747"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=51fda4919abe0b28"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>What types of test doubles do you need to test the function <code>test_me()</code> for
-the given values of <code>i</code> and <code>j</code>?</p>
-<table>
-<thead>
-<tr>
-<th>i</th>
-<th>j</th>
-<th>Service1</th>
-<th>Service2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>0</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<p>The class under test: <code>SpacecraftCommandController</code>.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=ab251c1cf21aed7b"><div class="prompt input_prompt">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=37ab7eb4cac9a3ba">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-c++"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SpacecraftCommandController</span><span class="w"> </span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">TelemetrySystem</span><span class="o">&amp;</span><span class="w"> </span><span class="n">telemetry</span><span class="p">;</span>
+<span class="w">    </span><span class="n">ThrusterControl</span><span class="o">&amp;</span><span class="w"> </span><span class="n">thrusters</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GroundControlLink</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ground_control</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">SpacecraftCommandController</span><span class="p">(</span><span class="n">TelemetrySystem</span><span class="o">&amp;</span><span class="w"> </span><span class="n">tel</span><span class="p">,</span><span class="w"> </span><span class="n">ThrusterControl</span><span class="o">&amp;</span><span class="w"> </span><span class="n">thr</span><span class="p">,</span><span class="w"> </span><span class="n">GroundControlLink</span><span class="o">&amp;</span><span class="w"> </span><span class="n">gc</span><span class="p">)</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">telemetry</span><span class="p">(</span><span class="n">tel</span><span class="p">),</span><span class="w"> </span><span class="n">thrusters</span><span class="p">(</span><span class="n">thr</span><span class="p">),</span><span class="w"> </span><span class="n">ground_control</span><span class="p">(</span><span class="n">gc</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">execute_burn_maneuver</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">duration_ms</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">power_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">telemetry</span><span class="p">.</span><span class="n">get_power_level_percent</span><span class="p">(</span><span class="n">SubSystem</span><span class="o">::</span><span class="n">Thrusters</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">power_level</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">ground_control</span><span class="p">.</span><span class="n">send_status_report</span><span class="p">(</span><span class="s">"ERROR: Thruster power too low for maneuver."</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">thrusters</span><span class="p">.</span><span class="n">fire_thrusters</span><span class="p">(</span><span class="n">duration_ms</span><span class="p">);</span>
+<span class="w">        </span><span class="n">ground_control</span><span class="p">.</span><span class="n">send_status_report</span><span class="p">(</span><span class="s">"SUCCESS: Maneuver executed."</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=10a47482cd27aa8c"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Implement the corresponding doubles and write the tests</p>
+<h2 id="Your-Task">Your Task<a class="anchor-link" href="#Your-Task">¶</a></h2><p>Write tests for the following scenarios. Implement the necessary test
+doubles.</p>
+<ol>
+<li><strong>Successful Maneuver:</strong> The thruster system has sufficient power (&gt;50%).
+Verify that the <code>fire_thrusters</code> command is sent and a success report is
+sent to ground control.</li>
+<li><strong>Maneuver Aborted (Low Power):</strong> The thruster system has insufficient
+power (&lt;50%). Verify that the thrusters are <strong>not</strong> fired and an error
+report is sent to ground control.</li>
+</ol>
 </div>
 </div>
 </div>

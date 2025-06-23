@@ -123,7 +123,7 @@ struct CartManager
 
     void add_to_cart(const std::string& product_id)
     {
-        double price = price_provider.get_price(product_id);
+        double price{price_provider.get_price(product_id)};
         cart.add_item(product_id, price);
     }
 };
@@ -132,8 +132,10 @@ struct CartManager
 //
 // ## The Test Doubles: Stub and Spy
 //
-// - For the `ProductPriceProvider` we use a **Stub** that returns a fixed price.
-// - For the `ShoppingCart` we use a **Spy** that records which items were added.
+// - For the `ProductPriceProvider` we use a **Stub** that returns a fixed
+//   price.
+// - For the `ShoppingCart` we use a **Spy** that records which items were
+//   added.
 
 // %%
 
@@ -218,10 +220,10 @@ private:
 
 public:
     SpacecraftCommandController(TelemetrySystem& tel, ThrusterControl& thr, GroundControlLink& gc)
-        : telemetry(tel), thrusters(thr), ground_control(gc) {}
+        : telemetry{tel}, thrusters{thr}, ground_control{gc} {}
 
     void execute_burn_maneuver(int duration_ms) {
-        int power_level = telemetry.get_power_level_percent(SubSystem::Thrusters);
+        int power_level{telemetry.get_power_level_percent(SubSystem::Thrusters)};
         if (power_level < 50) {
             ground_control.send_status_report("ERROR: Thruster power too low for maneuver.");
             return;

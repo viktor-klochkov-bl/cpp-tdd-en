@@ -13263,7 +13263,7 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=af4b0bdb71ef7008">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=2a1c67608c631c7e">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
@@ -13275,7 +13275,7 @@ div#notebook {
 
 <span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">add_to_cart</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">product_id</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">price</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">price_provider</span><span class="p">.</span><span class="n">get_price</span><span class="p">(</span><span class="n">product_id</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">price</span><span class="p">{</span><span class="n">price_provider</span><span class="p">.</span><span class="n">get_price</span><span class="p">(</span><span class="n">product_id</span><span class="p">)};</span>
 <span class="w">        </span><span class="n">cart</span><span class="p">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">product_id</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">};</span>
@@ -13284,12 +13284,14 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=c2203eaeb8704fa5"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=a9d0d54e2123441e"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="The-Test-Doubles:-Stub-and-Spy">The Test Doubles: Stub and Spy<a class="anchor-link" href="#The-Test-Doubles:-Stub-and-Spy">¶</a></h2><ul>
-<li>For the <code>ProductPriceProvider</code> we use a <strong>Stub</strong> that returns a fixed price.</li>
-<li>For the <code>ShoppingCart</code> we use a <strong>Spy</strong> that records which items were added.</li>
+<li>For the <code>ProductPriceProvider</code> we use a <strong>Stub</strong> that returns a fixed
+price.</li>
+<li>For the <code>ShoppingCart</code> we use a <strong>Spy</strong> that records which items were
+added.</li>
 </ul>
 </div>
 </div>
@@ -13467,7 +13469,7 @@ before executing commands.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=37ab7eb4cac9a3ba">
+<div class="cell border-box-sizing code_cell rendered celltag_keep" id="cell-id=4bdd3d5c7421aaf8">
 <div class="input">
 <div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
@@ -13480,10 +13482,10 @@ before executing commands.</li>
 
 <span class="k">public</span><span class="o">:</span>
 <span class="w">    </span><span class="n">SpacecraftCommandController</span><span class="p">(</span><span class="n">TelemetrySystem</span><span class="o">&amp;</span><span class="w"> </span><span class="n">tel</span><span class="p">,</span><span class="w"> </span><span class="n">ThrusterControl</span><span class="o">&amp;</span><span class="w"> </span><span class="n">thr</span><span class="p">,</span><span class="w"> </span><span class="n">GroundControlLink</span><span class="o">&amp;</span><span class="w"> </span><span class="n">gc</span><span class="p">)</span>
-<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">telemetry</span><span class="p">(</span><span class="n">tel</span><span class="p">),</span><span class="w"> </span><span class="n">thrusters</span><span class="p">(</span><span class="n">thr</span><span class="p">),</span><span class="w"> </span><span class="n">ground_control</span><span class="p">(</span><span class="n">gc</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">telemetry</span><span class="p">{</span><span class="n">tel</span><span class="p">},</span><span class="w"> </span><span class="n">thrusters</span><span class="p">{</span><span class="n">thr</span><span class="p">},</span><span class="w"> </span><span class="n">ground_control</span><span class="p">{</span><span class="n">gc</span><span class="p">}</span><span class="w"> </span><span class="p">{}</span>
 
 <span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">execute_burn_maneuver</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">duration_ms</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">power_level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">telemetry</span><span class="p">.</span><span class="n">get_power_level_percent</span><span class="p">(</span><span class="n">SubSystem</span><span class="o">::</span><span class="n">Thrusters</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">power_level</span><span class="p">{</span><span class="n">telemetry</span><span class="p">.</span><span class="n">get_power_level_percent</span><span class="p">(</span><span class="n">SubSystem</span><span class="o">::</span><span class="n">Thrusters</span><span class="p">)};</span>
 <span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">power_level</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="n">ground_control</span><span class="p">.</span><span class="n">send_status_report</span><span class="p">(</span><span class="s">"ERROR: Thruster power too low for maneuver."</span><span class="p">);</span>
 <span class="w">            </span><span class="k">return</span><span class="p">;</span>

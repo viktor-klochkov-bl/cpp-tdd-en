@@ -9,7 +9,7 @@
 // <br/>
 // <div style="text-align:center;">Coding-Academy Munich</div>
 // <br/>
-// <!-- 07 Test-Doubles.cpp -->
+// <!-- 08 Test-Doubles.cpp -->
 // <!-- slides/module_410_unit_testing/topic_162_test_doubles.cpp -->
 
 

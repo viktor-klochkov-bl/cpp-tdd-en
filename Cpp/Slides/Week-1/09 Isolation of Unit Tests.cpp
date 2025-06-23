@@ -9,7 +9,7 @@
 // <br/>
 // <div style="text-align:center;">Coding-Academy Munich</div>
 // <br/>
-// <!-- 08 Isolation of Unit Tests.cpp -->
+// <!-- 09 Isolation of Unit Tests.cpp -->
 // <!-- slides/module_410_unit_testing/topic_160_test_isolation.cpp -->
 
 
@@ -83,14 +83,34 @@ void print_time(std::string prefix, std::chrono::system_clock::time_point time_p
 }
 
 // %%
+auto global_time{std::chrono::system_clock::now()};
 
 // %%
+void test1()
+{
+    auto now{std::chrono::system_clock::now()};
+    print_time("Test 1 global_time: ", global_time);
+    print_time("Test 1 now:         ", now);
+    check(now > global_time);
+}
 
 // %%
+void test2()
+{
+    auto now{std::chrono::system_clock::now()};
+    global_time = now + std::chrono::seconds{1};
+    print_time("Test 2 global_time: ", global_time);
+    print_time("Test 2 now:         ", now);
+    check(now < global_time);
+}
 
 // %%
+test1();
+test2();
 
 // %%
+test2();
+test1();
 
 // %% [markdown]
 //
@@ -206,6 +226,7 @@ void test_purchase_tickets()
 } // namespace non_isolated
 
 // %%
+non_isolated::test_purchase_tickets();
 
 // %%
 namespace isolated
@@ -348,6 +369,7 @@ void test_purchase_tickets()
 } // namespace isolated
 
 // %%
+isolated::test_purchase_tickets();
 
 // %% [markdown]
 //

@@ -17,6 +17,7 @@ std::string fizz_buzz_string(int n) {
 
 std::vector<std::string> fizz_buzz_vector(int n) {
   std::vector<std::string> result;
+  result.reserve(n);
   for (int i = 1; i <= n; i++) {
     result.emplace_back(fizz_buzz_string(i));
   }

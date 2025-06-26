@@ -7,8 +7,6 @@
 
 int main(int argc, char** argv)
 {
-
     const long number_to_factor{argc >= 2 ? std::stol(argv[1]) : 100L};
-    std::cout << "I don't know how to factor, yet.\n"
-              << "Please fix me.\n";
+    prime_factors_sk::compute_and_write_prime(number_to_factor);
 }

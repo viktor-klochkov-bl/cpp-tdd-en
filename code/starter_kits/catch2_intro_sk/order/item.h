@@ -12,7 +12,7 @@ class Item
 {
 private:
     std::string name;
-    double price;
+    double price{};
 
 public:
     Item(std::string name, double price) : name(std::move(name)) { set_price(price); }

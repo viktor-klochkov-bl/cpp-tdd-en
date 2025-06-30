@@ -9,7 +9,7 @@
 // <br/>
 // <div style="text-align:center;">Coding-Academy Munich</div>
 // <br/>
-// <!-- 03 Writing good Unit Tests.cpp -->
+// <!-- 04 Writing good Unit Tests.cpp -->
 // <!-- slides/module_410_unit_testing/topic_165_writing_good_unit_tests.cpp -->
 
 
@@ -66,18 +66,8 @@
 #include "check.h"
 
 // %%
-#include <vector>
 
 // %%
-void test_insert()
-{
-    std::vector<int> x = {1, 2, 3}; // arrange
-    std::vector<int> y = {10, 20};
-
-    x.insert(x.end(), y.begin(), y.end()); // act
-
-    check(x == std::vector<int>{1, 2, 3, 10, 20}); // assert
-}
 
 // %% [markdown]
 //
@@ -182,46 +172,16 @@ int Stack::pop()
 // ### Tests when only `push()` and `pop()` are available
 
 // %%
-void test_stack_1()
-{
-    Stack s;
-    s.push(5);
-    check(s.pop() == 5);
-}
 
 // %%
-test_stack_1();
 
 // %%
-void test_stack_2()
-{
-    Stack s;
-    s.push(5);
-    s.push(10);
-    check(s.pop() == 10);
-    check(s.pop() == 5);
-}
 
 // %%
-test_stack_2();
 
 // %%
-void test_stack_3()
-{
-    Stack s;
-    try
-    {
-        s.pop();
-        check(false);
-    }
-    catch (const std::out_of_range&)
-    {
-        check(true);
-    }
-}
 
 // %%
-test_stack_3();
 
 // %% [markdown]
 //
@@ -241,7 +201,6 @@ test_stack_3();
 int add(int x, int y) { return x + y; }
 
 // %%
-check(add(2, 3) == 5);
 
 // %% [markdown]
 //
@@ -263,17 +222,12 @@ private:
 };
 
 // %%
-Adder adder;
 
 // %%
-adder.set_x(2);
-adder.set_y(3);
 
 // %%
-adder.add();
 
 // %%
-check(adder.get_result() == 5);
 
 // %% [markdown]
 //
@@ -305,31 +259,18 @@ private:
 // Test requires mock/spy
 
 // %%
-#include <utility>
-#include <vector>
 
 // %%
-struct AdderSpy : AbstractAdder
-{
-    std::vector<std::pair<int, int>> calls;
-    void add(int x, int y) override { calls.push_back({x, y}); };
-};
 
 // %%
-AdderSpy spy;
 
 // %%
-InteractionAdder adder{spy};
 
 // %%
-adder.add(2, 3);
 
 // %%
-check(spy.calls.size() == 1);
 
 // %%
-check(spy.calls[0].first == 2);
-check(spy.calls[0].second == 3);
 
 // %% [markdown]
 //
@@ -393,23 +334,10 @@ for (int i = 0; i < 3; ++i)
 }
 
 // %%
-class Counter
-{
-public:
-    int operator()() { return c_++; }
-
-private:
-    int c_{};
-};
 
 // %%
-Counter counter;
 
 // %%
-for (int i = 0; i < 3; ++i)
-{
-    std::cout << counter() << std::endl;
-}
 
 // %%
 enum class State
@@ -442,72 +370,13 @@ for (int i = 0; i < 3; ++i)
 }
 
 // %%
-class SwitchWithGetter
-{
-public:
-    void toggle()
-    {
-        state_ = state_ == State::OFF ? State::ON : State::OFF;
-        std::cout << "Switch is " << (state_ == State::OFF ? "OFF" : "ON") << std::endl;
-    }
-
-    State get_state() const { return state_; }
-
-private:
-    State state_{State::OFF};
-};
 
 // %%
-SwitchWithGetter sg;
 
 // %%
-for (int i = 0; i < 3; ++i)
-{
-    sg.toggle();
-}
 
 // %%
-std::cout << "Switch is " << (sg.get_state() == State::OFF ? "OFF" : "ON") << std::endl;
 
-
-// %%
-class ObservableSwitch
-{
-public:
-    void toggle()
-    {
-        state_ = state_ == State::OFF ? State::ON : State::OFF;
-        notify(state_);
-    }
-
-    void register_observer(std::function<void(State)> f) { observers_.push_back(f); }
-
-private:
-    void notify(State s)
-    {
-        for (auto& f : observers_)
-        {
-            f(s);
-        }
-    }
-
-    State state_{State::OFF};
-    std::vector<std::function<void(State)>> observers_;
-};
-
-// %%
-ObservableSwitch os;
-
-// %%
-os.register_observer([](State s) {
-    std::cout << "Switch is " << (s == State::OFF ? "OFF" : "ON") << std::endl;
-});
-
-// %%
-for (int i = 0; i < 3; ++i)
-{
-    os.toggle();
-}
 
 // %%
 void print_fib(int n)
@@ -527,54 +396,11 @@ void print_fib(int n)
 print_fib(5);
 
 // %%
-int fib1(int n)
-{
-    int a{0};
-    int b{1};
-    for (int i{0}; i < n; ++i)
-    {
-        int tmp{a};
-        a = b;
-        b = tmp + b;
-    }
-    return b;
-}
 
 // %%
-void print_fib1(int n)
-{
-    for (int i{0}; i < n; ++i)
-    {
-        std::cout << "fib(" << i << ") = " << fib1(i) << std::endl;
-    }
-}
 
 // %%
-print_fib1(5);
 
 // %%
-void fib_gen(int n, std::function<void(int, int)> f)
-{
-    int a{0};
-    int b{1};
-    for (int i{0}; i < n; ++i)
-    {
-        f(i, b);
-        int tmp{a};
-        a = b;
-        b = tmp + b;
-    }
-}
-
-// %%
-void print_fib2(int n)
-{
-    fib_gen(n, [](int i, int x) {
-        std::cout << "fib(" << i << ") = " << x << std::endl;
-    });
-}
-
-// %%
-print_fib2(5);
 
 // %%

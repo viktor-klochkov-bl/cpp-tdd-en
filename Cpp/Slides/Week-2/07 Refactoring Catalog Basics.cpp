@@ -1,0 +1,76 @@
+// -*- coding: utf-8 -*-
+// %% [markdown]
+//
+// <div style="text-align:center; font-size:200%;">
+//   <b>Refactoring Catalog: Basics</b>
+// </div>
+// <br/>
+// <div style="text-align:center; font-size:120%;">Dr. Matthias Hölzl</div>
+// <br/>
+// <div style="text-align:center;">Coding-Academy Munich</div>
+// <br/>
+// <!-- 07 Refactoring Catalog Basics.cpp -->
+// <!-- slides/module_550_refactoring/topic_210_refact_basics.cpp -->
+
+
+// %% [markdown]
+//
+// # Refactoring Catalog
+//
+// - Catalog of refactorings
+// - Description of refactorings in a standardized format
+//   - Name
+//   - Sketch
+//   - Motivation
+//   - Mechanics
+//   - Example
+
+// %% [markdown]
+//
+// - Each step in the Mechanics section is as small as possible
+// - If you are familiar with the refactoring, you can work with larger steps
+// - Alternative approaches are possible
+
+// %% [markdown]
+//
+// ## Basic Refactorings
+//
+// - Extract Function
+// - Inline Function
+// - Extract Variable
+// - Inline Variable
+//  // - Change Function Declaration
+
+// %% [markdown]
+//
+// - Encapsulate Variable
+// - Rename Variable
+// - Introduce Parameter Object
+// - Combine Functions into Class
+// - Combine Functions into Transformation
+// - Split Phase
+
+// %% [markdown]
+//
+// ### Helper Code for Examples
+//
+// Contents of `refactoring.h` (simplified)
+//
+// - Includes: `string`, `vector`, `iostream`, `iomanip`, `xcpp/display`
+// - Code:
+//
+// ```cpp
+// struct OrderLine {
+//     std::string product;
+//     int quantity;
+//     double price;
+// };
+//
+// inline std::vector<OrderLine> MakeOrderLines();
+// ```
+
+// %%
+#include "refactoring.h"
+
+// %%
+xcpp::display(MakeOrderLines());

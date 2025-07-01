@@ -21,6 +21,7 @@ set(COMPLETED_PROJECTS
         shared_memory
         simple_calculator
         simple_examples
+        simple_refactoring
         singleton
         test_examples
         virtual_university

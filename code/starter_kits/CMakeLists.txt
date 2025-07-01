@@ -9,8 +9,10 @@ set(STARTER_KITS
         library_sk
         prime_factors_sk
         recipes_sk
+        refactoring_lms_sk
         salaries_sk
         simple_calculator_sk
+        simple_refactoring_sk
         virtual_university_sk
 )
 

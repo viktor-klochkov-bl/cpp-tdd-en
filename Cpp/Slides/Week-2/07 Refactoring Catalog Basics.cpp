@@ -39,7 +39,7 @@
 // - Inline Function
 // - Extract Variable
 // - Inline Variable
-//  // - Change Function Declaration
+// - Change Function Declaration
 
 // %% [markdown]
 //

@@ -49,3 +49,15 @@
 // - Combine Functions into Class
 // - Combine Functions into Transformation
 // - Split Phase
+
+// %% [markdown]
+//
+// ## Workshop: Refactoring
+//
+// The code in
+// ```
+// code/starter_kits/refactoring_lms_sk/
+// ```
+// contains a simple C++ program that implements a Library Management System
+// (LMS). It has several code smells that are indicated by comments.
+// Refactor the code to eliminate these code smells.

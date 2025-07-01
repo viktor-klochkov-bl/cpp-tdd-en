@@ -10,7 +10,7 @@
 // <div style="text-align:center;">Coding-Academy Munich</div>
 // <br/>
 // <!-- 07 Refactoring Catalog Basics.cpp -->
-// <!-- slides/module_550_refactoring/topic_210_refact_basics.cpp -->
+// <!-- slides/module_550_refactoring/topic_210_refact_basics_no_helpers.cpp -->
 
 
 // %% [markdown]
@@ -49,28 +49,3 @@
 // - Combine Functions into Class
 // - Combine Functions into Transformation
 // - Split Phase
-
-// %% [markdown]
-//
-// ### Helper Code for Examples
-//
-// Contents of `refactoring.h` (simplified)
-//
-// - Includes: `string`, `vector`, `iostream`, `iomanip`, `xcpp/display`
-// - Code:
-//
-// ```cpp
-// struct OrderLine {
-//     std::string product;
-//     int quantity;
-//     double price;
-// };
-//
-// inline std::vector<OrderLine> MakeOrderLines();
-// ```
-
-// %%
-#include "refactoring.h"
-
-// %%
-xcpp::display(MakeOrderLines());

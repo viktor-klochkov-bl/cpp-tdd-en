@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-using namespace simple_refactoring;
+using namespace simpleRefactoring;
 
 int main()
 {

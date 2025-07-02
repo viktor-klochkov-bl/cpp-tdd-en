@@ -1,5 +1,6 @@
 // Copyright (c) 2025 Dr. Matthias Hölzl. All rights reserved.
 
+// ReSharper disable CppDFAConstantFunctionResult
 #pragma once
 #ifndef SIMPLE_REFACTORING_LIB_LIBRARY_H
 #define SIMPLE_REFACTORING_LIB_LIBRARY_H
@@ -9,7 +10,7 @@
 #include <string>
 #include <vector>
 
-namespace simple_refactoring
+namespace simpleRefactoring
 {
     // Examples of code that needs refactoring
 
@@ -180,6 +181,7 @@ namespace simple_refactoring
     {
         return 0.19; // 19% VAT
     }
+
     class Customer
     {
         std::string name;
@@ -224,6 +226,6 @@ namespace simple_refactoring
         return subtotal + (subtotal * GetTaxRate());
     }
 
-} // namespace simple_refactoring
+} // namespace simpleRefactoring
 
 #endif // SIMPLE_REFACTORING_LIB_LIBRARY_H

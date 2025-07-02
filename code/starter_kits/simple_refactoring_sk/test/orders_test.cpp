@@ -4,13 +4,12 @@
 
 #include <catch2/catch_test_macros.hpp>
 #include <iostream>
-#include <memory>
 #include <sstream>
 #include <streambuf>
 
 #include "catch2/catch_approx.hpp"
 
-using namespace simple_refactoring_sk;
+using namespace simpleRefactoringSk;
 
 // Test utility class to capture cout output
 class CoutCapture
@@ -150,21 +149,21 @@ TEST_CASE("CalculateShipping computes shipping costs", "[shipping]")
     SECTION("Domestic shipping")
     {
         double result = CalculateShipping(orderLines, "domestic");
-        // Weight = 5.0kg, which is >= 5.0, so: 5.0 * 1.2 + 2.5 = 8.5
+        // Weight = 5.0 kg, which is >= 5.0, so: 5.0 * 1.2 + 2.5 = 8.5
         REQUIRE(result == Catch::Approx(8.5));
     }
 
     SECTION("Europe shipping")
     {
         double result = CalculateShipping(orderLines, "europe");
-        // Weight = 5.0kg, which is >= 2.0, so: 5.0 * 2.8 + 8.0 = 22.0
+        // Weight = 5.0 kg, which is >= 2.0, so: 5.0 * 2.8 + 8.0 = 22.0
         REQUIRE(result == Catch::Approx(22.0));
     }
 
     SECTION("International shipping")
     {
         double result = CalculateShipping(orderLines, "international");
-        // Weight = 5.0kg, which is >= 1.0, so: 5.0 * 4.5 + 15.0 = 37.5
+        // Weight = 5.0 kg, which is >= 1.0, so: 5.0 * 4.5 + 15.0 = 37.5
         REQUIRE(result == Catch::Approx(37.5));
     }
 
@@ -216,14 +215,14 @@ TEST_CASE("Customer class functionality", "[customer]")
         REQUIRE(customer.loyaltyPoints == 100);
     }
 
-    SECTION("Customer display generates output")
+    SECTION("Customer Display generates output")
     {
         customer.name = "Jane Smith";
         customer.email = "jane@example.com";
         customer.loyaltyPoints = 50;
 
         CoutCapture capture;
-        customer.display();
+        customer.Display();
         std::string output = capture.GetOutput();
 
         REQUIRE(output.find("Jane Smith") != std::string::npos);
@@ -257,7 +256,7 @@ TEST_CASE("Global company name is accessible", "[globals]")
         companyName = "New Company";
         REQUIRE(companyName == "New Company");
 
-        // This change affects all code using the global variable
+        // This change affects all code using the global variable,
         // which is a maintenance problem
     }
 

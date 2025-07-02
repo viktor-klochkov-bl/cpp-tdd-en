@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-using namespace simple_refactoring_sk;
+using namespace simpleRefactoringSk;
 
 int main()
 {
@@ -37,7 +37,7 @@ int main()
     customer.name = "John Doe";
     customer.email = "john@example.com";
     customer.loyaltyPoints = 150;
-    customer.display();
+    customer.Display();
 
     // Direct manipulation of customer data (bad practice)
     customer.loyaltyPoints += 10;

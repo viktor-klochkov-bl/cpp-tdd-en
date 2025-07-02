@@ -2,7 +2,7 @@
 
 #include "orders.h"
 
-namespace simple_refactoring
+namespace simpleRefactoring
 {
     std::string CompanyInfo::name = "ACME Corp";
 }

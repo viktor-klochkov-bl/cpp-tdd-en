@@ -9,10 +9,8 @@
 #include <string>
 #include <vector>
 
-namespace simple_refactoring_sk
+namespace simpleRefactoringSk
 {
-
-    // before_refactoring.cpp
     // Examples of code that needs refactoring
 
     struct OrderLine
@@ -132,7 +130,7 @@ namespace simple_refactoring_sk
         std::string email;
         int loyaltyPoints;
 
-        void display()
+        void Display() const
         {
             std::cout << "Customer: " << name << " (" << email << ")\n";
             std::cout << "Loyalty Points: " << loyaltyPoints << "\n";
@@ -150,6 +148,6 @@ namespace simple_refactoring_sk
         return subtotal + (subtotal * GetTaxRate());
     }
 
-} // namespace simple_refactoring_sk
+} // namespace simpleRefactoringSk
 
 #endif // SIMPLE_REFACTORING_SK_LIB_LIBRARY_H

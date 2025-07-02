@@ -13,6 +13,7 @@ set(STARTER_KITS
         salaries_sk
         simple_calculator_sk
         simple_refactoring_sk
+        two_loop_cycle_sk
         virtual_university_sk
 )
 

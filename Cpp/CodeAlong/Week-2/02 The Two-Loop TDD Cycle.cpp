@@ -95,6 +95,7 @@
 #include "check.h"
 
 // %% [markdown]
+//
 // This is our high-level acceptance test.
 // It will not compile until we create the necessary classes and methods.
 
@@ -144,6 +145,8 @@
 //     new, focused unit test and implement the feature.
 // 4.  Rerun the acceptance test after each inner loop cycle to see your
 //     progress.
+
+// %%
 
 // %%
 

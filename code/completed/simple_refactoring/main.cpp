@@ -34,14 +34,14 @@ int main()
     }
 
     Customer customer;
-    customer.name = "John Doe";
-    customer.email = "john@example.com";
-    customer.loyaltyPoints = 150;
+    customer.SetName("John Doe");
+    customer.SetEmail("john@example.com");
+    customer.LoyaltyPoints() = 150;
     customer.display();
 
     // Direct manipulation of customer data (bad practice)
-    customer.loyaltyPoints += 10;
-    std::cout << "After adding points: " << customer.loyaltyPoints << "\n";
+    customer.LoyaltyPoints() += 10;
+    std::cout << "After adding points: " << customer.LoyaltyPoints() << "\n";
 
     return 0;
 }

@@ -95,6 +95,7 @@
 #include "check.h"
 
 // %% [markdown]
+//
 // This is our high-level acceptance test.
 // It will not compile until we create the necessary classes and methods.
 
@@ -146,9 +147,6 @@
 //     progress.
 
 // %% [markdown]
-// ## Solution for the Task and TodoList classes and their unit tests
-
-// %% [markdown]
 //
 // ### 1. The data structures
 
@@ -169,7 +167,7 @@ public:
         tasks.push_back({description, false});
     }
 
-    std::vector<Task> get_tasks() const {
+    const std::vector<Task>& get_tasks() const {
         return tasks;
     }
 
@@ -197,7 +195,7 @@ void test_new_list_is_empty() {
 test_new_list_is_empty();
 
 // %%
-void test_add_task_increases_count() {
+void test_add_task_adds_correct_task() {
     TodoList list;
     list.add_task("Test adding a task");
     check(list.get_tasks().size() == 1, "List should have 1 task after adding");
@@ -206,7 +204,17 @@ void test_add_task_increases_count() {
 }
 
 // %%
-test_add_task_increases_count();
+test_add_task_adds_correct_task();
+
+// %%
+void test_task_is_not_completed_by_default() {
+    Task task{"Test task"};
+    check(task.completed == false, "New task should not be completed by default");
+    std::cout << "Unit test 'test_task_is_not_completed_by_default' passed.\n";
+}
+
+// %%
+test_task_is_not_completed_by_default();
 
 // %%
 void test_mark_task_as_complete() {
@@ -260,7 +268,7 @@ test_full_todo_list_scenario_solution();
 // %%
 void run_all_tests() {
     test_new_list_is_empty();
-    test_add_task_increases_count();
+    test_add_task_adds_correct_task();
     test_mark_task_as_complete();
     std::cout << "--- All unit tests passed ---\n";
     test_full_todo_list_scenario_solution();
@@ -268,3 +276,5 @@ void run_all_tests() {
 
 // %%
 run_all_tests();
+
+// %%

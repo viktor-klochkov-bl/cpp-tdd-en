@@ -24,6 +24,7 @@ set(COMPLETED_PROJECTS
         simple_refactoring
         singleton
         test_examples
+        two_loop_cycle
         virtual_university
 )
 

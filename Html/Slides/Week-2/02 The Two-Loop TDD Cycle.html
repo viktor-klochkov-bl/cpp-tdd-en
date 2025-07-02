@@ -13187,7 +13187,7 @@ boundary inward.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=39896a690d71db94"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_slide" id="cell-id=59cffa026d832dcd"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Workshop:-A-To-Do-List-Application">Workshop: A To-Do List Application<a class="anchor-link" href="#Workshop:-A-To-Do-List-Application">¶</a></h2><p><strong>Goal:</strong> We will build a simple in-memory to-do list application using the
@@ -13198,6 +13198,8 @@ two-loop approach.</p>
 <li>View all tasks in the list.</li>
 <li>Mark a task as completed.</li>
 </ol>
+<p><strong>Note:</strong> A starter kit for this exercise is available in the folder
+<code>code/starter_kits/two_loop_cycle_sk</code>.</p>
 </div>
 </div>
 </div>
@@ -13225,7 +13227,7 @@ classes do not exist yet. This is the red state of our outer loop.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=e499cb21d11b1170"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=fc23db5fb3c318ed"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This is our high-level acceptance test.
@@ -13286,13 +13288,6 @@ progress.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide celltag_alt" id="cell-id=11a8a3d399dd3d72"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Solution-for-the-Task-and-TodoList-classes-and-their-unit-tests">Solution for the Task and TodoList classes and their unit tests<a class="anchor-link" href="#Solution-for-the-Task-and-TodoList-classes-and-their-unit-tests">¶</a></h2>
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing text_cell rendered celltag_subslide celltag_alt" id="cell-id=be509c790674ed6c"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13314,7 +13309,7 @@ progress.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_alt" id="cell-id=280b23e9b0de1f2f">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_alt" id="cell-id=60627652085ec4f1">
 <div class="input">
 <div class="prompt input_prompt">In [3]:</div>
 <div class="inner_cell">
@@ -13328,7 +13323,7 @@ progress.</li>
 <span class="w">        </span><span class="n">tasks</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="n">description</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">});</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;</span><span class="w"> </span><span class="n">get_tasks</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">get_tasks</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">tasks</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 
@@ -13390,12 +13385,12 @@ progress.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_alt" id="cell-id=b95257ceb21c1252">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_alt" id="cell-id=8678126f2ad2fe8e">
 <div class="input">
 <div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-c++"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">test_add_task_increases_count</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight hl-c++"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">test_add_task_adds_correct_task</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">TodoList</span><span class="w"> </span><span class="n">list</span><span class="p">;</span>
 <span class="w">    </span><span class="n">list</span><span class="p">.</span><span class="n">add_task</span><span class="p">(</span><span class="s">"Test adding a task"</span><span class="p">);</span>
 <span class="w">    </span><span class="n">check</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">get_tasks</span><span class="p">().</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">"List should have 1 task after adding"</span><span class="p">);</span>
@@ -13407,12 +13402,12 @@ progress.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_alt" id="cell-id=5aedb09e37b3f4e4">
+<div class="cell border-box-sizing code_cell rendered celltag_alt" id="cell-id=f806b488b2f6aa1b">
 <div class="input">
 <div class="prompt input_prompt">In [7]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight hl-c++"><pre><span></span><span class="n">test_add_task_increases_count</span><span class="p">();</span>
+<div class="highlight hl-c++"><pre><span></span><span class="n">test_add_task_adds_correct_task</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
@@ -13429,9 +13424,46 @@ progress.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_alt" id="cell-id=eb854fd94f27d88c">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_alt" id="cell-id=aa0050a40f9b205c">
 <div class="input">
 <div class="prompt input_prompt">In [8]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-c++"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">test_task_is_not_completed_by_default</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Task</span><span class="w"> </span><span class="n">task</span><span class="p">{</span><span class="s">"Test task"</span><span class="p">};</span>
+<span class="w">    </span><span class="n">check</span><span class="p">(</span><span class="n">task</span><span class="p">.</span><span class="n">completed</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="s">"New task should not be completed by default"</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Unit test 'test_task_is_not_completed_by_default' passed.</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_alt" id="cell-id=2a1cea688cf5bf00">
+<div class="input">
+<div class="prompt input_prompt">In [9]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-c++"><pre><span></span><span class="n">test_task_is_not_completed_by_default</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Unit test 'test_task_is_not_completed_by_default' passed.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_alt" id="cell-id=eb854fd94f27d88c">
+<div class="input">
+<div class="prompt input_prompt">In [10]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class="highlight hl-c++"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">test_mark_task_as_complete</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
@@ -13448,7 +13480,7 @@ progress.</li>
 </div>
 <div class="cell border-box-sizing code_cell rendered" id="cell-id=d53a5c7e98ef4325">
 <div class="input">
-<div class="prompt input_prompt">In [9]:</div>
+<div class="prompt input_prompt">In [11]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class="highlight hl-c++"><pre><span></span><span class="n">test_mark_task_as_complete</span><span class="p">();</span>
@@ -13480,7 +13512,7 @@ progress.</li>
 </div>
 <div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_alt" id="cell-id=b046381106906eff">
 <div class="input">
-<div class="prompt input_prompt">In [10]:</div>
+<div class="prompt input_prompt">In [12]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class="highlight hl-c++"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">test_full_todo_list_scenario_solution</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
@@ -13516,7 +13548,7 @@ progress.</li>
 </div>
 <div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_alt" id="cell-id=9a8ce12bdd7b7c1a">
 <div class="input">
-<div class="prompt input_prompt">In [11]:</div>
+<div class="prompt input_prompt">In [13]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class="highlight hl-c++"><pre><span></span><span class="n">test_full_todo_list_scenario_solution</span><span class="p">();</span>
@@ -13536,14 +13568,14 @@ progress.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_alt" id="cell-id=4c7fc14818d1f43d">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_alt" id="cell-id=b5a073a98fe3b172">
 <div class="input">
-<div class="prompt input_prompt">In [12]:</div>
+<div class="prompt input_prompt">In [14]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class="highlight hl-c++"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">run_all_tests</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">test_new_list_is_empty</span><span class="p">();</span>
-<span class="w">    </span><span class="n">test_add_task_increases_count</span><span class="p">();</span>
+<span class="w">    </span><span class="n">test_add_task_adds_correct_task</span><span class="p">();</span>
 <span class="w">    </span><span class="n">test_mark_task_as_complete</span><span class="p">();</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"--- All unit tests passed ---</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
 <span class="w">    </span><span class="n">test_full_todo_list_scenario_solution</span><span class="p">();</span>
@@ -13555,7 +13587,7 @@ progress.</li>
 </div>
 <div class="cell border-box-sizing code_cell rendered" id="cell-id=320814bb6b6fd9d0">
 <div class="input">
-<div class="prompt input_prompt">In [13]:</div>
+<div class="prompt input_prompt">In [15]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class="highlight hl-c++"><pre><span></span><span class="n">run_all_tests</span><span class="p">();</span>
@@ -13575,6 +13607,17 @@ Unit test 'test_mark_task_as_complete' passed.
 Acceptance test passed!
 </pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=6b4e03423667dbb7">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-c++"><pre><span></span>
+</pre></div>
 </div>
 </div>
 </div>

@@ -79,6 +79,9 @@
 // 1. Add a task to a list.
 // 2. View all tasks in the list.
 // 3. Mark a task as completed.
+//
+// **Note:** A starter kit for this exercise is available in the folder
+// `code/starter_kits/two_loop_cycle_sk`.
 
 // %% [markdown]
 // ### Step 1: The Outer Loop (Red)

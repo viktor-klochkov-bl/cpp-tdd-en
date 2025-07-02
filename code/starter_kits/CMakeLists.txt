@@ -13,6 +13,8 @@ set(STARTER_KITS
         salaries_sk
         simple_calculator_sk
         simple_refactoring_sk
+        spacecraft_controller_sk
+        testability_sk
         two_loop_cycle_sk
         vending_machine_sk
         virtual_university_sk

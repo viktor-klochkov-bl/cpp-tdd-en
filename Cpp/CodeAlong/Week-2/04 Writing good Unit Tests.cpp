@@ -316,6 +316,9 @@ void add_and_print(int x, int y) { std::cout << x + y << std::endl; }
 // - How can you improve the following functions/classes to make them more
 //   testable?
 // - What disadvantages result from this?
+//
+// **Note:**
+// You can also find the examples in `code/starter_kits/testability_sk`.
 
 // %%
 #include <iostream>

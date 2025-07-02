@@ -1,8 +1,8 @@
 // Copyright (c) 2025 Dr. Matthias Hölzl. All rights reserved.
 
 #pragma once
-#ifndef SIMPLE_REFACTORING_SK_LIB_LIBRARY_H
-#define SIMPLE_REFACTORING_SK_LIB_LIBRARY_H
+#ifndef SIMPLE_REFACTORING_SK_LIB_ORDERS_H
+#define SIMPLE_REFACTORING_SK_LIB_ORDERS_H
 
 #include <iomanip>
 #include <iostream>
@@ -150,4 +150,4 @@ namespace simpleRefactoringSk
 
 } // namespace simpleRefactoringSk
 
-#endif // SIMPLE_REFACTORING_SK_LIB_LIBRARY_H
+#endif // SIMPLE_REFACTORING_SK_LIB_ORDERS_H

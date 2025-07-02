@@ -112,13 +112,13 @@ TEST_CASE("Calc function calculates totals correctly", "[calculation]")
 
     SECTION("Without discount, without tax")
     {
-        double result = CalculateTotalWithoutDiscountAndTax(orderLines, 0.0, false);
+        double result = CalculateTotalWithDiscountAndTax(orderLines, 0.0, false);
         REQUIRE(result == Catch::Approx(expectedSubtotal));
     }
 
     SECTION("With discount, without tax")
     {
-        double result = CalculateTotalWithoutDiscountAndTax(orderLines, 0.0, true);
+        double result = CalculateTotalWithDiscountAndTax(orderLines, 0.0, true);
         double expectedWithDiscount = expectedSubtotal * 0.9;
         REQUIRE(result == Catch::Approx(expectedWithDiscount));
     }
@@ -126,7 +126,7 @@ TEST_CASE("Calc function calculates totals correctly", "[calculation]")
     SECTION("Without discount, with tax")
     {
         double taxRate = 0.19;
-        double result = CalculateTotalWithoutDiscountAndTax(orderLines, taxRate, false);
+        double result = CalculateTotalWithDiscountAndTax(orderLines, taxRate, false);
         double expectedWithTax = expectedSubtotal + (expectedSubtotal * taxRate);
         REQUIRE(result == Catch::Approx(expectedWithTax));
     }
@@ -134,7 +134,7 @@ TEST_CASE("Calc function calculates totals correctly", "[calculation]")
     SECTION("With discount and tax")
     {
         double taxRate = 0.19;
-        double result = CalculateTotalWithoutDiscountAndTax(orderLines, taxRate, true);
+        double result = CalculateTotalWithDiscountAndTax(orderLines, taxRate, true);
         double expectedWithDiscount = expectedSubtotal * 0.9;
         double expectedWithTax = expectedWithDiscount + (expectedWithDiscount * taxRate);
         REQUIRE(result == Catch::Approx(expectedWithTax));
@@ -282,7 +282,7 @@ TEST_CASE("Integration test - complete order processing", "[integration]")
 
         // Apply discount and tax
         double totalWithDiscountAndTax =
-            CalculateTotalWithoutDiscountAndTax(orderLines, 0.19, true);
+            CalculateTotalWithDiscountAndTax(orderLines, 0.19, true);
         double expectedDiscounted = subtotal * 0.9;
         double expectedFinal = expectedDiscounted + (expectedDiscounted * 0.19);
         REQUIRE(totalWithDiscountAndTax == Catch::Approx(expectedFinal));

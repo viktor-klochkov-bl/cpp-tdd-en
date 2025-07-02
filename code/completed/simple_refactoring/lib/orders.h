@@ -2,8 +2,8 @@
 
 // ReSharper disable CppDFAConstantFunctionResult
 #pragma once
-#ifndef SIMPLE_REFACTORING_LIB_LIBRARY_H
-#define SIMPLE_REFACTORING_LIB_LIBRARY_H
+#ifndef SIMPLE_REFACTORING_LIB_ORDERS_H
+#define SIMPLE_REFACTORING_LIB_ORDERS_H
 
 #include <iomanip>
 #include <iostream>
@@ -106,8 +106,8 @@ namespace simpleRefactoring
     }
 
     // Example 2: Applied Change Function Signature refactoring
-    inline double CalculateTotalWithoutDiscountAndTax(
-        const std::vector<OrderLine>& orderLines, double taxRate, bool applyDiscount)
+    inline double CalculateTotalWithDiscountAndTax(const std::vector<OrderLine>& orderLines,
+                                                   double taxRate, bool applyDiscount)
     {
         double t = 0.0;
         for (const auto& line : orderLines)
@@ -122,6 +122,16 @@ namespace simpleRefactoring
         return t;
     }
 
+    inline double CalculateShippingCost(double weight, const double heavyShippingThreshold,
+                                        const double baseShipping,
+                                        const double weightMultiplier,
+                                        const double heavyBaseShipping)
+    {
+        return (weight < heavyShippingThreshold)
+            ? baseShipping
+            : (weight * weightMultiplier + heavyBaseShipping);
+    }
+
     // Example 3: Function that could benefit from Extract Variable
     inline double CalculateShipping(const std::vector<OrderLine>& orderLines,
                                     const std::string& destination)
@@ -133,40 +143,23 @@ namespace simpleRefactoring
             weight += line.quantity * itemWeight;
         }
 
-        // Complex shipping calculation that could use explanatory variables
+        // Introduced explanatory variables, then extracted the shipping calculation
+        // to a separate function for clarity and reusability.
         if (destination == "domestic")
         {
-            constexpr auto heavyShippingThreshold = 5.0;
-            constexpr auto baseShipping = 5.99;
-            constexpr auto weightMultiplier = 1.2;
-            constexpr auto heavyBaseShipping = 2.5;
-
-            return (weight < heavyShippingThreshold)
-                ? baseShipping
-                : (weight * weightMultiplier + heavyBaseShipping);
+            return CalculateShippingCost(weight, 5.0, 5.99, 1.2, 2.5);
         }
         else if (destination == "europe")
         {
-            constexpr auto heavyShippingThreshold = 2.0;
-            constexpr auto baseShipping = 15.99;
-            constexpr auto weightMultiplier = 2.8;
-            constexpr auto heavyBaseShipping = 8.0;
-            return (weight < heavyShippingThreshold)
-                ? baseShipping
-                : (weight * weightMultiplier + heavyBaseShipping);
+            return CalculateShippingCost(weight, 2.0, 15.99, 2.8, 8.0);
         }
         else
         {
             // international
-            constexpr auto heavyShippingThreshold = 1.0;
-            constexpr auto baseShipping = 25.99;
-            constexpr auto weightMultiplier = 4.5;
-            constexpr auto heavyBaseShipping = 15.0;
-            return (weight < heavyShippingThreshold)
-                ? baseShipping
-                : (weight * weightMultiplier + heavyBaseShipping);
+            return CalculateShippingCost(weight, 1.0, 25.99, 4.5, 15.0);
         }
     }
+
 
     // Example 4: Unnecessary variable that could be inlined
     inline double GetOrderLineValue(const OrderLine& orderLine)
@@ -177,11 +170,18 @@ namespace simpleRefactoring
     // Example 5: Class with exposed data that needs encapsulation
 
     // Example 6: Function that could be inlined (too simple)
+    constexpr double taxRate = 0.19; // 19% VAT
+
+    // Function can be deleted after refactoring
     inline double GetTaxRate()
     {
-        return 0.19; // 19% VAT
+        return taxRate; // 19% VAT
     }
 
+    inline double CalculateTotalWithTax(double subtotal)
+    {
+        return subtotal + (subtotal * taxRate);
+    }
     class Customer
     {
         std::string name;
@@ -221,11 +221,6 @@ namespace simpleRefactoring
         }
     };
 
-    inline double CalculateTotalWithTax(double subtotal)
-    {
-        return subtotal + (subtotal * GetTaxRate());
-    }
-
 } // namespace simpleRefactoring
 
-#endif // SIMPLE_REFACTORING_LIB_LIBRARY_H
+#endif // SIMPLE_REFACTORING_LIB_ORDERS_H

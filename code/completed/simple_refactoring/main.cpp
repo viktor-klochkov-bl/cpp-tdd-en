@@ -17,7 +17,7 @@ int main()
     PrintReceipt(orderLines, true);
 
     std::cout << "Calculation using poorly named function:\n";
-    double result = CalculateTotalWithoutDiscountAndTax(orderLines, 0.19, true);
+    double result = CalculateTotalWithDiscountAndTax(orderLines, 0.19, true);
     std::cout << "Total with discount and tax: " << std::fixed << std::setprecision(2)
               << result << "€\n\n";
 

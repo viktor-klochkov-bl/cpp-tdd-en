@@ -175,6 +175,9 @@ struct CartManager
 //   before executing commands.
 // - Execute maneuvers with the thrusters (`ThrusterControl`).
 // - Notify ground control about command status (`GroundControlLink`).
+//
+// **Note:** A starter kit is available in
+// `code/starter_kits/spacecraft_controller_sk`.
 
 // %% [markdown]
 // First, the interfaces for the spacecraft's subsystems:

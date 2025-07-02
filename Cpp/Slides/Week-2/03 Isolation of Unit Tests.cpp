@@ -266,7 +266,9 @@ mockist::test_purchase_delegates_to_event();
 //     reorder.
 //   - This order is then sent to an `IOrderService`.
 //
-// - **Note:** You can also approach this task using TDD.
+// - **Notes:**
+//   - You can also approach this task using TDD.
+//   - A starter kit is available at `code/starter_kits/vending_machine_sk`.
 
 // %% [markdown]
 // ### Part 1: Chicago (Classicist) Style
@@ -341,6 +343,8 @@ void test_add_and_get_item() {
     check(retrieved.name == "Cola", "Item name should match");
     check(retrieved.current_stock == 10, "Current stock should match");
     check(retrieved.capacity == 20, "Capacity should match");
+
+    std::cout << "test_add_and_get_item() passed.\n";
 }
 }
 

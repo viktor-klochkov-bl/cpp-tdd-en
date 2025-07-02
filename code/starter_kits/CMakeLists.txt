@@ -14,6 +14,7 @@ set(STARTER_KITS
         simple_calculator_sk
         simple_refactoring_sk
         two_loop_cycle_sk
+        vending_machine_sk
         virtual_university_sk
 )
 

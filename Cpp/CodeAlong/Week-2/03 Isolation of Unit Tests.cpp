@@ -230,7 +230,9 @@ public:
 //     reorder.
 //   - This order is then sent to an `IOrderService`.
 //
-// - **Note:** You can also approach this task using TDD.
+// - **Notes:**
+//   - You can also approach this task using TDD.
+//   - A starter kit is available at `code/starter_kits/vending_machine_sk`.
 
 // %% [markdown]
 // ### Part 1: Chicago (Classicist) Style

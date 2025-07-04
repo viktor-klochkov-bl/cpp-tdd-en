@@ -25,6 +25,7 @@ set(COMPLETED_PROJECTS
         singleton
         test_examples
         two_loop_cycle
+        user_registration
         virtual_university
 )
 

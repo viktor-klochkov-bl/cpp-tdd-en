@@ -16,6 +16,7 @@ set(STARTER_KITS
         spacecraft_controller_sk
         testability_sk
         two_loop_cycle_sk
+        user_registration_sk
         vending_machine_sk
         virtual_university_sk
 )

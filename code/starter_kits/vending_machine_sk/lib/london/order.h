@@ -7,7 +7,7 @@
 #include <map>
 #include <string>
 
-namespace chicago_vending
+namespace london_vending
 {
     using Order = std::map<std::string, int>;
 

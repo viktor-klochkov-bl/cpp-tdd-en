@@ -2,6 +2,6 @@
 
 #include "item.h"
 
-namespace chicago_vending {
+namespace london_vending {
 
-} // chicago_vending
+} // london_vending

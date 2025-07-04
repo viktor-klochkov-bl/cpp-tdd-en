@@ -8,6 +8,8 @@ add_library(vending_machine_sk_lib
         chicago/Inventory.h
         chicago/OrderStrategy.cpp
         chicago/OrderStrategy.h
+        chicago/OrderService.cpp
+        chicago/OrderService.h
 
         london/vending_machine.cpp
         london/vending_machine.h
@@ -18,8 +20,8 @@ add_library(vending_machine_sk_lib
         london/Inventory.h
         london/OrderStrategy.cpp
         london/OrderStrategy.h
-        chicago/OrderService.cpp
-        chicago/OrderService.h
+        london/OrderService.cpp
+        london/OrderService.h
 
 )
 target_include_directories(vending_machine_sk_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

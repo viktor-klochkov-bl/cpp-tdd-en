@@ -4,11 +4,11 @@
 
 #ifndef INVERTORY_H
 #define INVERTORY_H
-
-#include "item.h"
-
 #include <string>
 #include <unordered_map>
+
+#include "item.h"
+#include "order.h"
 
 namespace london_vending{
 class Inventory {
@@ -20,7 +20,9 @@ public:
 
   [[nodiscard]] Item get_item(const std::string& name) const;
 
-  void restock_item(const std::string& name);
+  void restock_item(const std::string& name, int amount);
+
+  void executeOrder(const Order& order);
 
   void sell_item(const std::string& name, int amount = 1);
 

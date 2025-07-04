@@ -10,8 +10,13 @@ namespace london_vending {
     _inventory.add_item({name, capacity, capacity});
   }
 
-  void VendingMachine::restockProduct(const std::string &name) {
-    _inventory.restock_item(name);
+  void VendingMachine::check_and_restock() {
+    OrderStrategy strategy;
+    if (const Order order = strategy.compute_order(_inventory, _threshold); !order.empty()) {
+      if (_order_service.place_order(order)) {
+        _inventory.executeOrder(order);
+      }
+    }
   }
 
   void VendingMachine::sellProduct(const std::string &name, int amount) {

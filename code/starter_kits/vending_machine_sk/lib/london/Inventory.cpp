@@ -18,8 +18,19 @@ namespace london_vending{
     return _items.at(name);
   }
 
-  void Inventory::restock_item(const std::string &name) {
-    _items.at(name).current_stock = _items.at(name).capacity;
+  void Inventory::restock_item(const std::string &name, int amount) {
+    if (_items.at(name).current_stock + amount <= _items.at(name).capacity) {
+      _items.at(name).current_stock += amount;
+    }
+    else {
+      throw std::runtime_error("Not enough capacity");
+    }
+  }
+
+  void Inventory::executeOrder(const Order &order) {
+    for (const auto& [name, amount] : order) {
+      restock_item(name, amount);
+    }
   }
 
   void Inventory::sell_item(const std::string &name, int amount) {

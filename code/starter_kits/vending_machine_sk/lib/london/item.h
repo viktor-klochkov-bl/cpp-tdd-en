@@ -6,7 +6,7 @@
 
 #include <string>
 
-namespace chicago_vending
+namespace london_vending
 {
     struct Item
     {
@@ -15,6 +15,6 @@ namespace chicago_vending
         int capacity{};
     };
 
-} // namespace chicago_vending
+} // namespace london_vending
 
 #endif // LIB_CHICAGO_ITEM_H

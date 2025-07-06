@@ -16,7 +16,7 @@
 // %% [markdown]
 //
 // <img src="img/emergent-design-tdd-car.png"
-//      style="display:block;margin:auto;width:80%"/>
+//      style="display:block;margin:auto;width:100%"/>
 
 // %% [markdown]
 // ## Principles for Emergent Design
@@ -72,7 +72,7 @@
 
 // %% [markdown]
 //
-// - ### Triangulation
+// ### Triangulation
 //
 // - Use tests to drive design.
 // - Multiple tests for similar behavior to understand the structure of the
@@ -112,10 +112,32 @@
 // int sum(const std::vector<int>& numbers)
 // {
 //     if (numbers.empty())
-//     {
 //         return 0;
-//     }
 //     return numbers[0];
+// }
+// ```
+
+// %% [markdown]
+//
+// Test:
+// ```cpp
+// check(sum({}) == 0);
+// check(sum({1}) == 1);
+// check(sum({1, 2, 3}) == 6);
+// ```
+
+
+// %% [markdown]
+//
+// Code:
+// ```cpp
+// int sum(const std::vector<int>& numbers)
+// {
+//     if (numbers.empty())
+//         return 0;
+//     if (numbers.size() == 1)
+//         return numbers[0];
+//     return numbers[0] + sum(std::vector<int>(numbers.begin() + 1, numbers.end()));
 // }
 // ```
 

@@ -388,14 +388,14 @@ void demonstrate_non_humble_order_processor()
 //
 // ### Refactor & Test
 //
-// 1.  **Extracting the Business Logic:** We create an `OrderCalculator` class
+// 1.  **Extracting the Business Logic:** We create an `OrderService` class
 //     that encapsulates the pure business logic (discount calculation, price
 //     calculation).
 // 2.  **Creating the Humble Object:** The original `OrderProcessor` becomes the
 //     Humble Object. It only handles I/O and delegates business logic.
 // 3.  **Abstracting the Infrastructure:** We use interfaces for database and
 //     inventory service.
-// 4.  **Writing Tests:** We write unit tests for the `OrderCalculator` class.
+// 4.  **Writing Tests:** We write unit tests for the `OrderService` class.
 
 // %%
 // Solution:
@@ -511,13 +511,13 @@ double OrderService::calculate_discount(const std::string& customer_type, int qu
 namespace humble_order_processor
 {
 // 2. Humble Object - only handles infrastructure
-class OrderFileProcessor
+class OrderProcessor
 {
 private:
     OrderService* order_service;
 
 public:
-    OrderFileProcessor(OrderService* service) : order_service(service) {}
+    OrderProcessor(OrderService* service) : order_service(service) {}
 
     void process_orders_from_file(const std::string& file_path);
 
@@ -529,7 +529,7 @@ private:
 // %%
 namespace humble_order_processor
 {
-void OrderFileProcessor::process_orders_from_file(const std::string& file_path)
+void OrderProcessor::process_orders_from_file(const std::string& file_path)
 {
     // ONLY handles file I/O - no business decisions
     std::ifstream file(file_path);
@@ -551,7 +551,7 @@ void OrderFileProcessor::process_orders_from_file(const std::string& file_path)
 // %%
 namespace humble_order_processor
 {
-Order OrderFileProcessor::parse_order_line(const std::string& line)
+Order OrderProcessor::parse_order_line(const std::string& line)
 {
     std::stringstream ss(line);
     std::string customer_type, product, quantity_str, price_str;
@@ -682,12 +682,12 @@ void demonstrate_humble_object()
     OrderService order_service(&inventory_service, &order_repository);
 
     // Create the humble object
-    OrderFileProcessor file_processor(&order_service);
+    OrderProcessor processor(&order_service);
 
     // Process orders from a file (simulated)
     try
     {
-        file_processor.process_orders_from_file("orders.txt");
+        processor.process_orders_from_file("orders.txt");
     }
     catch (const std::runtime_error& e)
     {

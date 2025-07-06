@@ -14006,18 +14006,18 @@ is mixed with external dependencies.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=2d44e7e257b50715"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=56938032601569d8"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Refactor-&amp;-Test">Refactor &amp; Test<a class="anchor-link" href="#Refactor-&amp;-Test">¶</a></h3><ol>
-<li><strong>Extracting the Business Logic:</strong> We create an <code>OrderCalculator</code> class
+<li><strong>Extracting the Business Logic:</strong> We create an <code>OrderService</code> class
 that encapsulates the pure business logic (discount calculation, price
 calculation).</li>
 <li><strong>Creating the Humble Object:</strong> The original <code>OrderProcessor</code> becomes the
 Humble Object. It only handles I/O and delegates business logic.</li>
 <li><strong>Abstracting the Infrastructure:</strong> We use interfaces for database and
 inventory service.</li>
-<li><strong>Writing Tests:</strong> We write unit tests for the <code>OrderCalculator</code> class.</li>
+<li><strong>Writing Tests:</strong> We write unit tests for the <code>OrderService</code> class.</li>
 </ol>
 </div>
 </div>
@@ -14180,7 +14180,7 @@ inventory service.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=9d9399816b38389b">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=a9fa4bfced0de2dc">
 <div class="input">
 <div class="prompt input_prompt">In [27]:</div>
 <div class="inner_cell">
@@ -14188,13 +14188,13 @@ inventory service.</li>
 <div class="highlight hl-c++"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">humble_order_processor</span>
 <span class="p">{</span>
 <span class="c1">// 2. Humble Object - only handles infrastructure</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">OrderFileProcessor</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrderProcessor</span>
 <span class="p">{</span>
 <span class="k">private</span><span class="o">:</span>
 <span class="w">    </span><span class="n">OrderService</span><span class="o">*</span><span class="w"> </span><span class="n">order_service</span><span class="p">;</span>
 
 <span class="k">public</span><span class="o">:</span>
-<span class="w">    </span><span class="n">OrderFileProcessor</span><span class="p">(</span><span class="n">OrderService</span><span class="o">*</span><span class="w"> </span><span class="n">service</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">order_service</span><span class="p">(</span><span class="n">service</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="n">OrderProcessor</span><span class="p">(</span><span class="n">OrderService</span><span class="o">*</span><span class="w"> </span><span class="n">service</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">order_service</span><span class="p">(</span><span class="n">service</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
 
 <span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">process_orders_from_file</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">file_path</span><span class="p">);</span>
 
@@ -14207,14 +14207,14 @@ inventory service.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=6dba827d9393ee25">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=a8d866e882f59f14">
 <div class="input">
 <div class="prompt input_prompt">In [28]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class="highlight hl-c++"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">humble_order_processor</span>
 <span class="p">{</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">OrderFileProcessor::process_orders_from_file</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">file_path</span><span class="p">)</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">OrderProcessor::process_orders_from_file</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">file_path</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="c1">// ONLY handles file I/O - no business decisions</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="w"> </span><span class="n">file</span><span class="p">(</span><span class="n">file_path</span><span class="p">);</span>
@@ -14237,14 +14237,14 @@ inventory service.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=eff96fde24ad9db7">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=01bf01d2d1b2a069">
 <div class="input">
 <div class="prompt input_prompt">In [29]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class="highlight hl-c++"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">humble_order_processor</span>
 <span class="p">{</span>
-<span class="n">Order</span><span class="w"> </span><span class="nf">OrderFileProcessor::parse_order_line</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">line</span><span class="p">)</span>
+<span class="n">Order</span><span class="w"> </span><span class="nf">OrderProcessor::parse_order_line</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">line</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">stringstream</span><span class="w"> </span><span class="n">ss</span><span class="p">(</span><span class="n">line</span><span class="p">);</span>
 <span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">customer_type</span><span class="p">,</span><span class="w"> </span><span class="n">product</span><span class="p">,</span><span class="w"> </span><span class="n">quantity_str</span><span class="p">,</span><span class="w"> </span><span class="n">price_str</span><span class="p">;</span>
@@ -14433,7 +14433,7 @@ inventory service.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=c27d36f4a0c1b085">
+<div class="cell border-box-sizing code_cell rendered celltag_subslide celltag_keep" id="cell-id=b52dd1109b4323ad">
 <div class="input">
 <div class="prompt input_prompt">In [36]:</div>
 <div class="inner_cell">
@@ -14450,12 +14450,12 @@ inventory service.</li>
 <span class="w">    </span><span class="n">OrderService</span><span class="w"> </span><span class="n">order_service</span><span class="p">(</span><span class="o">&amp;</span><span class="n">inventory_service</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">order_repository</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// Create the humble object</span>
-<span class="w">    </span><span class="n">OrderFileProcessor</span><span class="w"> </span><span class="n">file_processor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">order_service</span><span class="p">);</span>
+<span class="w">    </span><span class="n">OrderProcessor</span><span class="w"> </span><span class="n">processor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">order_service</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// Process orders from a file (simulated)</span>
 <span class="w">    </span><span class="k">try</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">file_processor</span><span class="p">.</span><span class="n">process_orders_from_file</span><span class="p">(</span><span class="s">"orders.txt"</span><span class="p">);</span>
+<span class="w">        </span><span class="n">processor</span><span class="p">.</span><span class="n">process_orders_from_file</span><span class="p">(</span><span class="s">"orders.txt"</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="o">&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>

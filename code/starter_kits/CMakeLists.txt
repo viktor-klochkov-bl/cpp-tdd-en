@@ -9,6 +9,7 @@ set(STARTER_KITS
         library_sk
         order_processor_sk
         prime_factors_sk
+        project_adventure_sk
         recipes_sk
         refactoring_lms_sk
         salaries_sk

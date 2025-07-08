@@ -221,10 +221,10 @@ with_di.do_something();
 
 // %% [markdown]
 //
-// ## Workshop: Refactoring to a Humble Object
+// ## Workshop: Refactoring to a Testable Object
 //
 // **Goal:** Refactor a hard-to-test class that mixes business logic and external
-// dependencies using the Humble Object pattern.
+// dependencies using the patterns we discussed.
 //
 // **Scenario:** A `UserRegistrationService` that:
 //

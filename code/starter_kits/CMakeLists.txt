@@ -7,6 +7,7 @@ set(STARTER_KITS
         hello_world_sk
         invoice_sk
         library_sk
+        order_processor_sk
         prime_factors_sk
         recipes_sk
         refactoring_lms_sk

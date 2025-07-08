@@ -21,7 +21,7 @@ struct Product {
     explicit Product(const ProductDescription& description)
         : price {description.first}, departmentName {description.second} { }
 
-    [[maybe_unused]] double price {};
+    double price {};
     std::string departmentName;
 };
 

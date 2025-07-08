@@ -12,6 +12,7 @@ set(COMPLETED_PROJECTS
         memory_and_polymorphism
         modern_cpp
         namespace_lookup
+        order_processor
         pointers
         prime_factors
         raii

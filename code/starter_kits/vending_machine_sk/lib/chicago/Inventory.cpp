@@ -4,41 +4,55 @@
 
 #include "Inventory.h"
 
-namespace chicago_vending{
+#include <stdexcept>
 
-  void Inventory::add_item(const Item &item) {
-    _items.emplace(item.name, item);
-  }
+namespace chicago_vending
+{
 
-  int Inventory::get_item_count(const std::string &name) const {
-    return _items.at(name).current_stock;
-  }
-
-  Item Inventory::get_item(const std::string &name) const {
-    return _items.at(name);
-  }
-
-  void Inventory::restock_item(const std::string &name, int amount) {
-    if (_items.at(name).current_stock + amount <= _items.at(name).capacity) {
-      _items.at(name).current_stock += amount;
+    void Inventory::add_item(const Item& item)
+    {
+        _items.emplace(item.name, item);
     }
-    else {
-      throw std::runtime_error("Not enough capacity");
-    }
-  }
 
-  void Inventory::executeOrder(const Order &order) {
-    for (const auto& [name, amount] : order) {
-      restock_item(name, amount);
+    int Inventory::get_item_count(const std::string& name) const
+    {
+        return _items.at(name).current_stock;
     }
-  }
 
-  void Inventory::sell_item(const std::string &name, int amount) {
-    if (_items.at(name).current_stock >= amount){
-      _items.at(name).current_stock -= amount;
+    Item Inventory::get_item(const std::string& name) const
+    {
+        return _items.at(name);
     }
-    else {
-      throw std::runtime_error("Not enough stock");
+
+    void Inventory::restock_item(const std::string& name, int amount)
+    {
+        if (_items.at(name).current_stock + amount <= _items.at(name).capacity)
+        {
+            _items.at(name).current_stock += amount;
+        }
+        else
+        {
+            throw std::runtime_error("Not enough capacity");
+        }
     }
-  }
-}
+
+    void Inventory::executeOrder(const Order& order)
+    {
+        for (const auto& [name, amount] : order)
+        {
+            restock_item(name, amount);
+        }
+    }
+
+    void Inventory::sell_item(const std::string& name, int amount)
+    {
+        if (_items.at(name).current_stock >= amount)
+        {
+            _items.at(name).current_stock -= amount;
+        }
+        else
+        {
+            throw std::runtime_error("Not enough stock");
+        }
+    }
+} // namespace chicago_vending

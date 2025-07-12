@@ -48,6 +48,8 @@
 
 // %%
 
+// %%
+
 // %% [markdown]
 //
 // - Cells can also contain statements, e.g. function definitions

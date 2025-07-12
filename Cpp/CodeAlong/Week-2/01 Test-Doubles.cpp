@@ -94,6 +94,10 @@
 // First, we define the interfaces for our dependencies:
 
 // %%
+#include <string>
+
+
+// %%
 class ProductPriceProvider
 {
 public:
@@ -136,6 +140,8 @@ struct CartManager
 //   price.
 // - For the `ShoppingCart` we use a **Spy** that records which items were
 //   added.
+
+// %%
 
 // %%
 

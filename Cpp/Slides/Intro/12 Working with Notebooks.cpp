@@ -45,10 +45,13 @@
 //   displayed
 
 // %%
-123
+#include <iostream>
 
 // %%
-17 + 4
+std::cout << 123;
+
+// %%
+std::cout << 17 + 4;
 
 // %% [markdown]
 //
@@ -64,10 +67,10 @@ void say_hello(const std::string& name) {
 }
 
 // %%
-say_hello("World")
+say_hello("World");
 
 // %%
-say_hello("you")
+say_hello("you");
 
 // %% [markdown]
 //
@@ -83,10 +86,10 @@ struct Point {
 Point p{1, 2};
 
 // %%
-p.x
+std::cout << p.x;
 
 // %%
-p.y
+std::cout << p.y;
 
 // %% [markdown]
 //
@@ -98,16 +101,16 @@ p.y
 //   - (`Shift-Tab`)
 
 // %%
-123
+std::cout << 123;
 
 // %%
-17 + 4
+std::cout << 17 + 4;
 
 // %%
-int answer{42}
+int answer{42};
 
 // %%
-answer
+std::cout << answer;
 
 // %%
-answer;
+std::cout << answer;

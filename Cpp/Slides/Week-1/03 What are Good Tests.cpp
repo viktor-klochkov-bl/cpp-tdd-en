@@ -175,6 +175,9 @@ void testOrderTotal()
 testOrderTotal();
 
 // %%
+#include <sstream>
+
+// %%
 void testOrderOutput()
 {
     Order unit{
@@ -243,7 +246,7 @@ class VeryPrivate
 {
 private:
     int secret{42};
-}
+};
 
 // %%
 #undef private
@@ -332,7 +335,7 @@ std::string formatDateAsString(const std::chrono::system_clock::time_point& time
 }
 
 // %%
-std::string getCurrentDateAsString() {
+std::string getCurrentDateAsStringBetter() {
     return formatDateAsString(std::chrono::system_clock::now());
 }
 
@@ -349,10 +352,10 @@ const std::chrono::system_clock::time_point fixedTime{
 }; // 2025-06-15 as time_point
 
 // %%
-const std::string expectedDateString{"2025-06-15"}
+const std::string expectedDateString{"2025-06-15"};
 
 // %%
-formatDateAsString(fixedTime)
+std::cout << formatDateAsString(fixedTime);
 
 // %%
 void testDateBetter()

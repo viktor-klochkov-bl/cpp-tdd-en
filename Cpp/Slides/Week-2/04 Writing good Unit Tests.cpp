@@ -319,10 +319,10 @@ struct AdderSpy : AbstractAdder
 AdderSpy spy;
 
 // %%
-InteractionAdder adder{spy};
+InteractionAdder interaction_adder{spy};
 
 // %%
-adder.add(2, 3);
+interaction_adder.add(2, 3);
 
 // %%
 check(spy.calls.size() == 1);

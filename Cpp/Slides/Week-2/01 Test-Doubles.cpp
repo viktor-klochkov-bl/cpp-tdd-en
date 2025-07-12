@@ -94,6 +94,10 @@
 // First, we define the interfaces for our dependencies:
 
 // %%
+#include <string>
+
+
+// %%
 class ProductPriceProvider
 {
 public:
@@ -143,6 +147,9 @@ class ProductPriceProviderStub : public ProductPriceProvider
 public:
     double get_price(const std::string& product_id) override { return 99.99; }
 };
+
+// %%
+#include <vector>
 
 // %%
 class ShoppingCartSpy : public ShoppingCart

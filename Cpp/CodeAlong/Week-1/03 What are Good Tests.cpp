@@ -150,6 +150,8 @@ std::ostream& operator<<(std::ostream& os, const Order& order)
 
 // %%
 
+// %%
+
 // %% [markdown]
 //
 // ## Easy to maintain
@@ -200,7 +202,7 @@ class VeryPrivate
 {
 private:
     int secret{42};
-}
+};
 
 // %%
 
@@ -288,7 +290,7 @@ const std::chrono::system_clock::time_point fixedTime{
 }; // 2025-06-15 as time_point
 
 // %%
-const std::string expectedDateString{"2025-06-15"}
+const std::string expectedDateString{"2025-06-15"};
 
 // %%
 

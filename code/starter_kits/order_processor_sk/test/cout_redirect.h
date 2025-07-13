@@ -1,4 +1,4 @@
-// Copyright (c) 2024 Dr. Matthias Hölzl. All rights reserved.
+// Copyright (c) 2024-2025 Dr. Matthias Hölzl. All rights reserved.
 
 #pragma once
 #ifndef ORDER_PROCESSOR_SK_TEST_COUT_REDIRECT_H
@@ -13,16 +13,16 @@ class CoutRedirect
 public:
     CoutRedirect()
     {
-        coutbuf = std::cout.rdbuf();
+        saved_cout_buf = std::cout.rdbuf();
         std::cout.rdbuf(ss.rdbuf());
     }
 
-    ~CoutRedirect() { std::cout.rdbuf(coutbuf); }
+    ~CoutRedirect() { std::cout.rdbuf(saved_cout_buf); }
 
     std::string get_output() { return ss.str(); }
 
 private:
-    std::streambuf* coutbuf;
+    std::streambuf* saved_cout_buf;
     std::stringstream ss;
 };
 

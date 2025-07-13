@@ -15,6 +15,7 @@ set(COMPLETED_PROJECTS
         order_processor
         pointers
         prime_factors
+        project_adventure
         raii
         range_examples
         recipes

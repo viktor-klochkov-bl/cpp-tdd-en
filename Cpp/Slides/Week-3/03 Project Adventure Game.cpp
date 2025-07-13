@@ -89,13 +89,15 @@
 
 // %% [markdown]
 //
-// #### **Story 4: Handling Invalid Moves**
+// #### **Story 4: Handling Directions and Invalid Moves**
 //
 // * **As a player, I want to be told in which directions I can move.**
 // * **Acceptance Criteria:**
 //   * Given I am in the "Grand Hall" and there are exits to the North and
 //     South, but not to the East and West.
 //   * I see an indication that I can only move North or South.
+//   * If the UI allows entering invalid moves, I am informed when I enter an
+//     invalid direction.
 
 // %% [markdown]
 //
@@ -137,10 +139,72 @@
 //   * Given I have investigated the Armoury, seen a "rusty sword" and a "golden
 //     chalice", and taken the "rusty sword".
 //   * When I move South to the Grand Hall and then move North back to the
-//     Armoury.
-//   * The "golden chalice" is still visible, but the "rusty sword" is no longer
-//     there.
+//     Armoury the "golden chalice" is still visible, but the "rusty sword" is
+//     no longer there.
 //   * If I investigate again, the "rusty sword" is not re-discovered.
+
+// %% [markdown]
+//
+// #### Story 8: Displaying the Inventory
+//
+// * **As a player, I want to see my inventory, so that I know which items I
+//   have.**
+// * **Acceptance Criteria:**
+//   * Given I have a "rusty sword" and a "golden chalice" in my inventory.
+//   * When I enter the command to display my inventory,
+//   * I see the text "Your inventory contains: rusty sword, golden chalice."
+
+// %% [markdown]
+//
+// #### Story 9: Taking Items into the Inventory
+//
+// * **As a player, I want to take visible items into my inventory, so that
+//   I can use them later.**
+// * **Acceptance Criteria:**
+//   * Given I am in the Armoury and see a "rusty sword".
+//   * My inventory is empty.
+//   * When I enter the command to take the rusty sword, the "rusty sword" is
+//     added to my inventory and disappears from the room.
+//   * When I display my inventory, I see the text "Your inventory contains:
+//     rusty sword."
+
+// %% [markdown]
+//
+// #### Story 10: Using Items
+//
+// * **As a player, I want to use items that I have in my inventory, so that I
+//   can solve puzzles or affect the world.**
+// * **Acceptance Criteria:**
+//   * Given I have a "rusty sword" in my inventory.
+//   * When I enter the command to use the rusty sword,
+//   * I see the text "You swing the rusty sword. It is dull, but it feels good
+//     in your hand."
+
+// %% [markdown]
+//
+// #### Story 11: Using Different Items
+//
+// * **As a player, I want to be able to use different items to perform
+//   different actions.**
+// * **Acceptance Criteria:**
+//   * Given I have a "rusty sword" and a "golden chalice" in my inventory.
+//   * When I enter the command to use the golden chalice,
+//   * I see the text "You hold the golden chalice aloft. It glints in the light
+//     and feels cool to the touch."
+
+// %% [markdown]
+//
+// #### Story 12: Dropping Items
+//
+// * **As a player, I want to be able to drop items from my inventory, so that I
+//   can make room for new items.**
+// * **Acceptance Criteria:**
+//   * Given I have a "rusty sword" in my inventory.
+//   * When I enter the command to drop the rusty sword, the "rusty sword" is
+//     removed from my inventory and placed in the current room.
+//   * When I display my inventory, I no longer see the rusty sword.
+//   * When the description of the current room is displayed, I see the rusty
+//     sword.
 
 // %% [markdown]
 //
@@ -153,23 +217,23 @@
 
 // %% [markdown]
 //
-// #### **Story 8: The Purity Refactor (A Developer Story)**
+// #### **Story 13: The Ports-and-Adapters Refactor (A Developer Story)**
 //
 // * **As a developer, I want to test the game's logic without caring about the
-//   console text, so that I can create an AI "bot" that can play the game by
-//   reading its state.**
+//   input or output mechanisms, so that I can create an AI "bot" that can play
+//   the game by inspecting its current state.**
 // * **Acceptance Criteria:**
 //   * The core Game engine should provide a raw data representation of the
-//     current game state (e.g., a dictionary or a Data Transfer Object).
+//     current game state (e.g., a map or a Data Transfer Object).
 //   * This data object should contain the room description, the path to the
 //     room's image, the available choices, and the player's inventory.
 //   * A separate component (an **Adapter**) should be responsible for taking
-//     this data object and formatting it into the user-facing string for the
+//     this data object and formatting it into the user-facing output for the
 //     console.
 
 // %% [markdown]
 //
-// #### **Story 9: Adding Visuals Easily**
+// #### **Story 14: Adding Visuals**
 //
 // * **As a player, I want to see an image for each room, so that the game is
 //   more immersive.**

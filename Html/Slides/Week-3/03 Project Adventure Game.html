@@ -13199,15 +13199,17 @@ chamber."</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=4f624338d3d67ed0"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=acd4004bc5917f5d"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Story-4:-Handling-Invalid-Moves"><strong>Story 4: Handling Invalid Moves</strong><a class="anchor-link" href="#Story-4:-Handling-Invalid-Moves">¶</a></h4><ul>
+<h4 id="Story-4:-Handling-Directions-and-Invalid-Moves"><strong>Story 4: Handling Directions and Invalid Moves</strong><a class="anchor-link" href="#Story-4:-Handling-Directions-and-Invalid-Moves">¶</a></h4><ul>
 <li><strong>As a player, I want to be told in which directions I can move.</strong></li>
 <li><strong>Acceptance Criteria:</strong><ul>
 <li>Given I am in the "Grand Hall" and there are exits to the North and
 South, but not to the East and West.</li>
 <li>I see an indication that I can only move North or South.</li>
+<li>If the UI allows entering invalid moves, I am informed when I enter an
+invalid direction.</li>
 </ul>
 </li>
 </ul>
@@ -13255,7 +13257,7 @@ inventory.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=4fcf9f36f8e364cb"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=105ffa5d4455925e"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Story-7:-Remembering-Room-State"><strong>Story 7: Remembering Room State</strong><a class="anchor-link" href="#Story-7:-Remembering-Room-State">¶</a></h4><ul>
@@ -13265,10 +13267,97 @@ feels persistent.</strong></li>
 <li>Given I have investigated the Armoury, seen a "rusty sword" and a "golden
 chalice", and taken the "rusty sword".</li>
 <li>When I move South to the Grand Hall and then move North back to the
-Armoury.</li>
-<li>The "golden chalice" is still visible, but the "rusty sword" is no longer
-there.</li>
+Armoury the "golden chalice" is still visible, but the "rusty sword" is
+no longer there.</li>
 <li>If I investigate again, the "rusty sword" is not re-discovered.</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=0aed7e522292da8a"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Story-8:-Displaying-the-Inventory">Story 8: Displaying the Inventory<a class="anchor-link" href="#Story-8:-Displaying-the-Inventory">¶</a></h4><ul>
+<li><strong>As a player, I want to see my inventory, so that I know which items I
+have.</strong></li>
+<li><strong>Acceptance Criteria:</strong><ul>
+<li>Given I have a "rusty sword" and a "golden chalice" in my inventory.</li>
+<li>When I enter the command to display my inventory,</li>
+<li>I see the text "Your inventory contains: rusty sword, golden chalice."</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=916776c98b21c22d"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Story-9:-Taking-Items-into-the-Inventory">Story 9: Taking Items into the Inventory<a class="anchor-link" href="#Story-9:-Taking-Items-into-the-Inventory">¶</a></h4><ul>
+<li><strong>As a player, I want to take visible items into my inventory, so that
+I can use them later.</strong></li>
+<li><strong>Acceptance Criteria:</strong><ul>
+<li>Given I am in the Armoury and see a "rusty sword".</li>
+<li>My inventory is empty.</li>
+<li>When I enter the command to take the rusty sword, the "rusty sword" is
+added to my inventory and disappears from the room.</li>
+<li>When I display my inventory, I see the text "Your inventory contains:
+rusty sword."</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=eeb677cebe629b33"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Story-10:-Using-Items">Story 10: Using Items<a class="anchor-link" href="#Story-10:-Using-Items">¶</a></h4><ul>
+<li><strong>As a player, I want to use items that I have in my inventory, so that I
+can solve puzzles or affect the world.</strong></li>
+<li><strong>Acceptance Criteria:</strong><ul>
+<li>Given I have a "rusty sword" in my inventory.</li>
+<li>When I enter the command to use the rusty sword,</li>
+<li>I see the text "You swing the rusty sword. It is dull, but it feels good
+in your hand."</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=bd8ee28da96c9f75"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Story-11:-Using-Different-Items">Story 11: Using Different Items<a class="anchor-link" href="#Story-11:-Using-Different-Items">¶</a></h4><ul>
+<li><strong>As a player, I want to be able to use different items to perform
+different actions.</strong></li>
+<li><strong>Acceptance Criteria:</strong><ul>
+<li>Given I have a "rusty sword" and a "golden chalice" in my inventory.</li>
+<li>When I enter the command to use the golden chalice,</li>
+<li>I see the text "You hold the golden chalice aloft. It glints in the light
+and feels cool to the touch."</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=3f3ff6f40d583a35"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Story-12:-Dropping-Items">Story 12: Dropping Items<a class="anchor-link" href="#Story-12:-Dropping-Items">¶</a></h4><ul>
+<li><strong>As a player, I want to be able to drop items from my inventory, so that I
+can make room for new items.</strong></li>
+<li><strong>Acceptance Criteria:</strong><ul>
+<li>Given I have a "rusty sword" in my inventory.</li>
+<li>When I enter the command to drop the rusty sword, the "rusty sword" is
+removed from my inventory and placed in the current room.</li>
+<li>When I display my inventory, I no longer see the rusty sword.</li>
+<li>When the description of the current room is displayed, I see the rusty
+sword.</li>
 </ul>
 </li>
 </ul>
@@ -13284,20 +13373,20 @@ but we use them here to push towards a clean/hexagonal architecture.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=f8d07dab925836b7"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=9489d96f7162969e"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Story-8:-The-Purity-Refactor-(A-Developer-Story)"><strong>Story 8: The Purity Refactor (A Developer Story)</strong><a class="anchor-link" href="#Story-8:-The-Purity-Refactor-(A-Developer-Story)">¶</a></h4><ul>
+<h4 id="Story-13:-The-Ports-and-Adapters-Refactor-(A-Developer-Story)"><strong>Story 13: The Ports-and-Adapters Refactor (A Developer Story)</strong><a class="anchor-link" href="#Story-13:-The-Ports-and-Adapters-Refactor-(A-Developer-Story)">¶</a></h4><ul>
 <li><strong>As a developer, I want to test the game's logic without caring about the
-console text, so that I can create an AI "bot" that can play the game by
-reading its state.</strong></li>
+input or output mechanisms, so that I can create an AI "bot" that can play
+the game by inspecting its current state.</strong></li>
 <li><strong>Acceptance Criteria:</strong><ul>
 <li>The core Game engine should provide a raw data representation of the
-current game state (e.g., a dictionary or a Data Transfer Object).</li>
+current game state (e.g., a map or a Data Transfer Object).</li>
 <li>This data object should contain the room description, the path to the
 room's image, the available choices, and the player's inventory.</li>
 <li>A separate component (an <strong>Adapter</strong>) should be responsible for taking
-this data object and formatting it into the user-facing string for the
+this data object and formatting it into the user-facing output for the
 console.</li>
 </ul>
 </li>
@@ -13305,10 +13394,10 @@ console.</li>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=092b397c84a3664c"><div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered celltag_subslide" id="cell-id=d50a106f70779da9"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Story-9:-Adding-Visuals-Easily"><strong>Story 9: Adding Visuals Easily</strong><a class="anchor-link" href="#Story-9:-Adding-Visuals-Easily">¶</a></h4><ul>
+<h4 id="Story-14:-Adding-Visuals"><strong>Story 14: Adding Visuals</strong><a class="anchor-link" href="#Story-14:-Adding-Visuals">¶</a></h4><ul>
 <li><strong>As a player, I want to see an image for each room, so that the game is
 more immersive.</strong></li>
 <li><strong>Acceptance Criteria:</strong><ul>

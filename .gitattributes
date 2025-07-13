@@ -1,0 +1,26 @@
+* text eol=crlf
+
+*.7z binary
+*.bz2 binary
+*.doc binary
+*.docx binary
+*.gif binary
+*.gz binary
+*.ico binary
+*.jar binary
+*.jpeg binary
+*.jpg binary
+*.mp3 binary
+*.pdf binary
+*.png binary
+*.ppt binary
+*.pptx binary
+*.rar binary
+*.tar binary
+*.wav binary
+*.webp binary
+*.webm binary
+*.xls binary
+*.xlsx binary
+*.xz binary
+*.zip binary

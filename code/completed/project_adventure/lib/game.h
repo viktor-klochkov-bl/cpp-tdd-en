@@ -18,6 +18,7 @@ namespace adv
 class Game
 {
 public:
+    Game() = default;
     explicit Game(const std::vector<Room>& rooms);
 
     void run();

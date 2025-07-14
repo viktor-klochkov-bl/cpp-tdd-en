@@ -25,7 +25,8 @@ TEST_CASE(
                                   "Reducing stock for monitor by 1\n"
                                   "Processed order: monitor for $299.99\n";
 
-    processor.process_orders_from_file("orders.txt");
+    processor.process_orders_from_file("C:\\soft\\cpp-tdd-en\\code\\starter_"
+                                       "kits\\order_processor_sk\\orders.txt");
 
     std::string output = cout.get_output();
     REQUIRE(output == expected_output);

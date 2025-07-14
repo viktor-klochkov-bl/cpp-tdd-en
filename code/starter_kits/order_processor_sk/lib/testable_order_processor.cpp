@@ -1,7 +1,8 @@
+// Copyright (c) 2025 Dr. Matthias Hölzl. All rights reserved.
+
 #include <iostream>
 
 #include <fstream>
-#include <iostream>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -12,7 +13,65 @@ namespace testable_order_processor_sk
 {
 using order_processor_sk::Order;
 
-void OrderProcessor::process_orders_from_file(const std::string& file_path)
+OrderService::OrderService(std::unique_ptr<IInventoryService> inventory_service,
+                           std::unique_ptr<IOrderRepository> order_service) :
+    inventory_service_{std::move(inventory_service)},
+    order_service_{std::move(order_service)}
+{
+}
+
+void OrderService::process_order(Order& order) const
+{
+    // Service invocation
+    if (!inventory_service_->check_inventory(order.product, order.quantity))
+    {
+        std::cout << "Not enough inventory for " << order.product << std::endl;
+    }
+
+    double discount = calculate_discount(order.customer_type, order.quantity);
+    order.total_price = (order.unit_price * order.quantity) * (1.0 - discount);
+    order.is_valid = true;
+
+    // Database operations
+    order_service_->save_order_to_database(order);
+
+    // Service invocation
+    const std::string& product = order.product;
+    int quantity = order.quantity;
+    inventory_service_->update_inventory(product, quantity);
+
+    std::cout << "Processed order: " << order.product << " for $"
+              << order.total_price << std::endl;
+}
+
+double OrderService::calculate_discount(const std::string& customer_type,
+                                        int quantity)
+{
+    double discount = 0.0;
+    if (customer_type == "premium")
+    {
+        discount += 0.1; // 10% for premium
+    }
+    if (quantity >= 10)
+    {
+        discount += 0.05; // 5% for bulk
+    }
+    return std::min(discount, 0.15); // Max 15% discount
+}
+
+OrderProcessor::OrderProcessor() :
+    order_service_{std::make_unique<OrderService>(
+        std::make_unique<DefaultInventoryService>(),
+        std::make_unique<DefaultOrderRepository>())}
+{
+}
+
+OrderProcessor::OrderProcessor(std::unique_ptr<OrderService> order_service) :
+    order_service_{std::move(order_service)}
+{
+}
+
+void OrderProcessor::process_orders_from_file(const std::string& file_path) const
 {
     // File operations
     std::ifstream file(file_path);
@@ -26,27 +85,7 @@ void OrderProcessor::process_orders_from_file(const std::string& file_path)
     {
         Order order = parse_order_line(line);
 
-        // Service invocation
-        if (!check_inventory(order.product, order.quantity))
-        {
-            std::cout << "Not enough inventory for " << order.product
-                      << std::endl;
-            continue;
-        }
-
-        double discount = calculate_discount(order.customer_type, order.quantity);
-        order.total_price =
-            (order.unit_price * order.quantity) * (1.0 - discount);
-        order.is_valid = true;
-
-        // Database operations
-        save_order_to_database(order);
-
-        // Service invocation
-        update_inventory(order.product, order.quantity);
-
-        std::cout << "Processed order: " << order.product << " for $"
-                  << order.total_price << std::endl;
+        order_service_->process_order(order);
     }
 }
 
@@ -64,38 +103,25 @@ Order OrderProcessor::parse_order_line(const std::string& line)
             std::stod(price_str), 0.0,     false};
 }
 
-double OrderProcessor::calculate_discount(const std::string& customer_type,
-                                          int quantity)
-{
-    double discount = 0.0;
-    if (customer_type == "premium")
-    {
-        discount += 0.1; // 10% for premium
-    }
-    if (quantity >= 10)
-    {
-        discount += 0.05; // 5% for bulk
-    }
-    return std::min(discount, 0.15); // Max 15% discount
-}
-
-bool OrderProcessor::check_inventory(const std::string& product, int quantity)
+bool DefaultInventoryService::check_inventory(const std::string& product,
+                                              int quantity)
 {
     std::cout << "Checking inventory for " << product << std::endl;
-    return quantity <= 100; // Simulate inventory check against external source
+    return quantity <= 100; // Simulate inventory check against an external source
 }
 
-void OrderProcessor::save_order_to_database(const Order& order)
-{
-    std::cout << "Saving order to database" << std::endl;
-    // Simulate database save
-}
-
-void OrderProcessor::update_inventory(const std::string& product, int quantity)
+void DefaultInventoryService::update_inventory(const std::string& product,
+                                               int quantity)
 {
     std::cout << "Reducing stock for " << product << " by " << quantity
               << std::endl;
     // Simulate inventory update
+}
+
+void DefaultOrderRepository::save_order_to_database(const Order& order)
+{
+    std::cout << "Saving order to database" << std::endl;
+    // Simulate database save
 }
 
 } // namespace testable_order_processor_sk

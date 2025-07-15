@@ -8,8 +8,12 @@
 #include <vector>
 
 #include "Map.h"
+#include "Player.h"
 
 namespace adv_sk {
+
+  class IInputHandler {
+  };
 
   class Game {
   public:
@@ -28,7 +32,7 @@ namespace adv_sk {
     void move(Direction direction);
 
     [[nodiscard]] Room get_current_location() const {
-      return _current_room;
+      return _player.get_current_room();
     }
 
     [[nodiscard]] std::vector<Direction> get_available_directions() const;
@@ -43,7 +47,9 @@ namespace adv_sk {
     std::unique_ptr<Map> _map{};
 
     // current state
+    Player _player{};
+
     std::string _current_message{};
-    Room _current_room{};
+//    Room _current_room{};
   };
 }

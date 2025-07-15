@@ -5,5 +5,7 @@ add_library(project_adventure_sk_lib
         Game.h
         Map.cpp
         Map.h
+        Player.cpp
+        Player.h
 )
 target_include_directories(project_adventure_sk_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

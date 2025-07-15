@@ -16,7 +16,7 @@ namespace adv_sk {
     }
   }
 
-  void Game::handle_user_action() {
+  void Game::handle_user_action() { //NOLINT(misc-no-recursion)
     auto action = detail::read_from_cin();
 
     if (action == "move") {
@@ -40,14 +40,16 @@ namespace adv_sk {
     init();
     update_message();
 
-    handle_user_action();
+    if (false){
+      handle_user_action();
+    }
   }
 
   void Game::move(Direction direction) {
 
-    const auto next_room = _map->nextRoom(_current_room, direction);
+    const auto next_room = _map->nextRoom(_player.get_current_room(), direction);
     if (next_room.has_value()) {
-      _current_room = next_room.value();
+      _player.change_room(next_room.value());
     }
     update_message();
   }
@@ -55,7 +57,7 @@ namespace adv_sk {
   std::vector<Direction> Game::get_available_directions() const {
     std::vector<Direction> result;
     for (auto direction : {Direction::North, Direction::South, Direction::East, Direction::West}) {
-      auto room = _map->nextRoom(_current_room, direction);
+      auto room = _map->nextRoom(_player.get_current_room(), direction);
       if (room.has_value()) {
         result.push_back(direction);
       }
@@ -77,14 +79,15 @@ namespace adv_sk {
           }
         );
     }
-    _current_room = Room::GrandHall;
+
+    _player.change_room(Room::GrandHall);
   }
 
   void Game::update_message() {
-    if (_current_room == Room::GrandHall) {
+    if (_player.get_current_room() == Room::GrandHall) {
       _current_message = "You are in the Grand Hall. It is a vast, echoing chamber.";
     }
-    else if (_current_room == Room::Armoury) {
+    else if (_player.get_current_room() == Room::Armoury) {
       _current_message = "You are in the Armoury. Racks of dusty weapons line the walls.";
     }
     print_message();

@@ -3,55 +3,55 @@
 //
 
 #include "Map.h"
+#include "Room.h"
+#include "Direction.h"
 
 #include <optional>
+#include <stdexcept>
 #include <string>
 #include <unordered_map>
 
-namespace adv_sk {
-  std::string direction_to_string(Direction direction) {
-    switch (direction) {
-      case Direction::North:
-        return "North";
-      case Direction::South:
-        return "South";
-      case Direction::East:
-        return "East";
-      case Direction::West:
-        return "West";
-    }
-    throw std::runtime_error("Unknown direction");
-  }
+namespace adv_sk
+{
 
-  Direction string_to_direction(const std::string &direction) {
-    if (direction == "North") {
-      return Direction::North;
-    }
-    if (direction == "South") {
-      return Direction::South;
-    }
-    if (direction == "East") {
-      return Direction::East;
-    }
-    if (direction == "West") {
-      return Direction::West;
-    }
-    throw std::runtime_error("Unknown direction");
-  }
 
-  std::optional<Room> RoomConnections::get_connection(Direction direction) const {
-    const auto it = connections.find(direction);
-    if (it == connections.end()) {
-      return std::nullopt;
+Map::Map(std::vector<Room> rooms,
+         std::unordered_map<RoomName, RoomConnections> connections)
+{
+    for (const auto& room : rooms)
+    {
+        _rooms.emplace(room.get_name(), room);
     }
-    return it->second;
-  }
+    for (auto [room_name, connection] : connections)
+    {
+        //_rooms[room_name].add_connection(connection);
+        //     _rooms[room_name].add_connection(connection);
+    }
+}
 
-  std::optional<Room> Map::nextRoom(Room current_room, Direction direction) {
-    auto current_root_it = _map.find(current_room);
-    if (current_root_it == _map.end()) {
-      return std::nullopt;
+std::optional<RoomName> Map::nextRoom(RoomName current_room, Direction direction)
+{
+    auto current_root_it = _connections.find(current_room);
+    if (current_root_it == _connections.end())
+    {
+        return std::nullopt;
     }
     return current_root_it->second.get_connection(direction);
-  }
 }
+
+std::string Map::get_welcome_message(RoomName room)
+{
+    return _rooms.find(room)->second.get_message();
+}
+
+std::unique_ptr<adv_sk::Map> create_map()
+{
+  auto map = std::make_unique<Map>(std::vector<RoomName>{ "GrandHall" , "Armoury" }, std::unordered_map<RoomName, RoomConnections>{ "GrandHall", RoomConnections{Direction::North, "Armoury"} });
+
+    //return std::make_unique<Map>(std::unordered_map<RoomName, RoomConnections>{
+    //    {"GrandHall", RoomConnections{Direction::North, "Armoury"}},
+    //    {"Armoury", RoomConnections{Direction::South, "GrandHall"}},
+    //});
+}
+
+} // namespace adv_sk

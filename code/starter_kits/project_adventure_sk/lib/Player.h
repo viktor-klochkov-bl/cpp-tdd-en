@@ -3,36 +3,36 @@
 //
 #pragma once
 
+#include "Inventory.h"
 #include "Map.h"
+#include "Room.h"
 
 #include <string>
 #include <vector>
 
-namespace adv_sk {
+namespace adv_sk
+{
 
-  struct Inventory {
-    std::string name{};
-  };
-
-
-  class Player {
-  public:
-    [[nodiscard]] std::vector<Inventory> get_inventory() const {
-      return _inventory;
+class Player
+{
+public:
+    [[nodiscard]] std::vector<Inventory> get_inventory() const
+    {
+        return _inventory;
     }
 
-    [[nodiscard]] Room get_current_room() const {
-      return _current_room;
+    [[nodiscard]] RoomName get_current_room() const
+    {
+        return _current_room;
     }
 
-    void change_room(Room room) {
-      _current_room = room;
+    void change_room(RoomName room)
+    {
+        _current_room = room;
     }
 
-  private:
-    Room _current_room{};
-    std::vector <Inventory> _inventory{};
-
-
-  };
-}
+private:
+    RoomName _current_room{};
+    std::vector<Inventory> _inventory{};
+};
+} // namespace adv_sk

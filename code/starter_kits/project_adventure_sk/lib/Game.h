@@ -31,23 +31,37 @@ public:
 
     void start();
 
+    void move(Direction direction);
+
+    void investigate();
+
+    void take_item(const std::string& item_name);
+
+    void display_player_inventory();
+
+    void use_item(const std::string& item_name);
+
+    void drop_item(const std::string& item_name);
+
+    [[nodiscard]] std::vector<Direction> get_available_directions() const;
+
     [[nodiscard]] std::string get_current_message() const
     {
         return _current_message;
     }
-
-    void move(Direction direction);
 
     [[nodiscard]] RoomName get_current_location() const
     {
         return _player.get_current_room();
     }
 
-    [[nodiscard]] std::vector<Direction> get_available_directions() const;
-
     void put_into_test_mode()
     {
         _test_mode = true;
+    }
+
+    [[nodiscard]] Player player() const {
+        return _player;
     }
 
 private:
@@ -55,7 +69,7 @@ private:
 
     void init();
 
-    void update_message(std::string message);
+    void update_message(const std::string& message);
 
     std::unique_ptr<Map> _map{};
 
@@ -65,6 +79,5 @@ private:
     Player _player{};
 
     std::string _current_message{};
-    //    Room _current_room{};
 };
 } // namespace adv_sk

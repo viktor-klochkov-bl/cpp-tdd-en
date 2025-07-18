@@ -3,8 +3,8 @@
 //
 
 #include "Map.h"
-#include "Room.h"
 #include "Direction.h"
+#include "Room.h"
 
 #include <optional>
 #include <stdexcept>
@@ -15,43 +15,53 @@ namespace adv_sk
 {
 
 
-Map::Map(std::vector<Room> rooms,
-         std::unordered_map<RoomName, RoomConnections> connections)
+Map::Map(const std::vector<Room>& rooms,
+         const std::unordered_map<RoomName, RoomConnections>& connections)
 {
     for (const auto& room : rooms)
     {
         _rooms.emplace(room.get_name(), room);
     }
-    for (auto [room_name, connection] : connections)
+    for (const auto& [room_name, connection] : connections)
     {
-        //_rooms[room_name].add_connection(connection);
-        //     _rooms[room_name].add_connection(connection);
+        for (const auto& [direction, room_name_to] : connection.connections) {
+            _rooms.find(room_name)->second.add_connection(direction, room_name_to);
+            _rooms.find(room_name_to)->second.add_connection(opposite_direction(direction), room_name);
+        }
     }
 }
 
-std::optional<RoomName> Map::nextRoom(RoomName current_room, Direction direction)
+std::optional<RoomName> Map::nextRoom(const RoomName& current_room,
+                                      Direction direction)
 {
-    auto current_root_it = _connections.find(current_room);
-    if (current_root_it == _connections.end())
-    {
+    auto room = _rooms.find(current_room)->second;
+
+    room.connections().connections.find(direction);
+    if (!room.connections().connections.contains(direction))
         return std::nullopt;
-    }
-    return current_root_it->second.get_connection(direction);
+    return room.connections().connections.find(direction)->second;
 }
 
-std::string Map::get_welcome_message(RoomName room)
-{
+std::string Map::get_welcome_message(const RoomName& room) const {
     return _rooms.find(room)->second.get_message();
 }
 
 std::unique_ptr<adv_sk::Map> create_map()
 {
-  auto map = std::make_unique<Map>(std::vector<RoomName>{ "GrandHall" , "Armoury" }, std::unordered_map<RoomName, RoomConnections>{ "GrandHall", RoomConnections{Direction::North, "Armoury"} });
+    InventoryItem sword("rusty sword");
+    InventoryItem chalice("golden chalice", "You hold the golden chalice aloft. It glints in the light and feels cool to the touch.\n");
 
-    //return std::make_unique<Map>(std::unordered_map<RoomName, RoomConnections>{
-    //    {"GrandHall", RoomConnections{Direction::North, "Armoury"}},
-    //    {"Armoury", RoomConnections{Direction::South, "GrandHall"}},
-    //});
+    Room grand_hall("GrandHall", "You are in the Grand Hall. It is a vast, echoing chamber.", {chalice});
+    Room armory("Armoury", "You are in the Armoury. Racks of dusty weapons line the walls.", {sword});
+    RoomConnections grand_hall_connection;
+    grand_hall_connection.add(Direction::North, "Armoury");
+
+     auto map = std::make_unique<Map>(
+         std::vector<Room>{ grand_hall,armory },
+         std::unordered_map<RoomName, RoomConnections>{
+             {"GrandHall", grand_hall_connection} } );
+
+    return map;
 }
 
 } // namespace adv_sk

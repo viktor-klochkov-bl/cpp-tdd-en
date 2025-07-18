@@ -20,7 +20,7 @@ std::string read_from_cin()
 } // namespace detail
 
 void Game::handle_user_action() // NOLINT(misc-no-recursion)
-{ 
+{
     auto action = detail::read_from_cin();
 
     if (action == "move")
@@ -72,7 +72,6 @@ void Game::start()
 
 void Game::move(Direction direction)
 {
-
     const auto next_room = _map->nextRoom(_player.get_current_room(), direction);
     if (next_room.has_value())
     {
@@ -82,6 +81,80 @@ void Game::move(Direction direction)
     else
     {
         update_message("Wrong direction!\n");
+    }
+}
+
+void Game::investigate() {
+    auto room = _player.get_current_room();
+    auto& inventory = _map->get_room(room).inventory();
+    if (!inventory.empty()) {
+        std::string message = "You search the room. You found";
+        for (auto& item : inventory) {
+            item.is_visible = true;
+            message.append(" a " + item.name);
+        }
+        message.append("!\n");
+        update_message(message);
+    }
+    else {
+        update_message("You search the room. Nothing found!\n");
+    }
+}
+
+void Game::take_item(const std::string &item_name) {
+    const auto room = _player.get_current_room();
+    const auto& inventory = _map->get_room(room).inventory();
+    for (auto& item : inventory) {
+        if (item.name == item_name && item.is_visible) {
+            std::cout << "You take the " << item.name << "!\n";
+            _player.add_to_inventory(item);
+            _map->get_room(room).remove_from_inventory(item);
+            break;
+        }
+        else {
+            std::cout << "You can't take the " << item.name << "!\n";
+        }
+    }
+}
+
+void Game::display_player_inventory() {
+    std::string message ("Your inventory contains:");
+    for (const auto &item : _player.get_inventory()) {
+        message.append(" " + item.name);
+    }
+    message.append(".\n");
+    update_message(message);
+}
+
+void Game::use_item(const std::string &item_name) {
+    auto& inventory = _player.get_inventory();
+    auto it = std::ranges::find_if(inventory,
+        [&item_name](const InventoryItem& item) {
+            return item.name == item_name;
+        });
+    if (it != inventory.end()) {
+        update_message(it->use_message);
+        inventory.erase(it);
+    }
+    else {
+        update_message("You can't use the " + item_name + "!\n");
+    }
+
+}
+
+void Game::drop_item(const std::string &item_name) {
+    auto& inventory = _player.get_inventory();
+    auto it = std::ranges::find_if(inventory,
+        [&item_name](const InventoryItem& item) {
+            return item.name == item_name;
+        });
+    if (it != inventory.end()) {
+        update_message(std::format("You drop the {}. It fades away in the darkness.\n", item_name));
+        _map->get_room(_player.get_current_room()).add_to_inventory(*it);
+        inventory.erase(it);
+    }
+    else {
+        update_message("You can't drop the " + item_name + "!\n");
     }
 }
 
@@ -116,20 +189,11 @@ void Game::init()
     _player.change_room("GrandHall");
 }
 
-void Game::update_message(std::string message)
+void Game::update_message(const std::string& message)
 {
     if (message.empty())
     {
-        if (_player.get_current_room() == "GrandHall")
-        {
-            _current_message =
-                "You are in the Grand Hall. It is a vast, echoing chamber.";
-        }
-        else if (_player.get_current_room() == "Armoury")
-        {
-            _current_message =
-                "You are in the Armoury. Racks of dusty weapons line the walls.";
-        }
+        _current_message = _map->get_welcome_message(_player.get_current_room());
     }
     else
     {

@@ -21,7 +21,8 @@ public:
         return _inventory;
     }
 
-    void add_to_inventory(const InventoryItem &item) {
+    void add_to_inventory(const InventoryItem& item)
+    {
         _inventory.push_back(item);
     }
 
@@ -30,7 +31,7 @@ public:
         return _current_room;
     }
 
-    void change_room(const RoomName &room)
+    void change_room(const RoomName& room)
     {
         _current_room = room;
     }

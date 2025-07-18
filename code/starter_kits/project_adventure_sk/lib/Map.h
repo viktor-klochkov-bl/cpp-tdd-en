@@ -29,7 +29,8 @@ public:
 
     [[nodiscard]] std::string get_welcome_message(const RoomName& room) const;
 
-    [[nodiscard]] Room& get_room(const RoomName& room) {
+    [[nodiscard]] Room& get_room(const RoomName& room)
+    {
         return _rooms.at(room);
     }
 

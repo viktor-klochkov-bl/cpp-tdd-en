@@ -31,7 +31,8 @@ class Room
 {
 public:
     explicit Room(RoomName _name, std::string _message = {},
-    std::vector<InventoryItem> _inventory = {}, RoomConnections _connections = {}) :
+                  std::vector<InventoryItem> _inventory = {},
+                  RoomConnections _connections = {}) :
         _name(std::move(_name)), _message(std::move(_message)),
         _inventory(std::move(_inventory)), _connections(std::move(_connections))
     {
@@ -52,19 +53,23 @@ public:
         _connections.add(direction, room);
     }
 
-    [[nodiscard]] RoomConnections connections() const {
+    [[nodiscard]] RoomConnections connections() const
+    {
         return _connections;
     }
 
-    [[nodiscard]] std::vector<InventoryItem>& inventory() {
+    [[nodiscard]] std::vector<InventoryItem>& inventory()
+    {
         return _inventory;
     }
 
-    void add_to_inventory(const InventoryItem& item) {
+    void add_to_inventory(const InventoryItem& item)
+    {
         _inventory.push_back(item);
     }
 
-    void remove_from_inventory(const InventoryItem& item) {
+    void remove_from_inventory(const InventoryItem& item)
+    {
         std::erase(_inventory, item);
     }
 
@@ -73,7 +78,6 @@ private:
     std::string _message{};
     std::vector<InventoryItem> _inventory{};
 
-private:
     RoomConnections _connections{};
 };
 

@@ -60,7 +60,8 @@ public:
         _test_mode = true;
     }
 
-    [[nodiscard]] Player player() const {
+    [[nodiscard]] Player player() const
+    {
         return _player;
     }
 

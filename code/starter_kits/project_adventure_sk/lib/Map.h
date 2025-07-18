@@ -21,20 +21,19 @@ namespace adv_sk
 class Map
 {
 public:
-    explicit Map(std::unordered_map<RoomName, RoomConnections> map) :
-        _connections(std::move(map))
-    {
+    Map(const std::vector<Room>& rooms,
+        const std::unordered_map<RoomName, RoomConnections>& map);
+
+    std::optional<RoomName> nextRoom(const RoomName& current_room,
+                                     Direction direction);
+
+    [[nodiscard]] std::string get_welcome_message(const RoomName& room) const;
+
+    [[nodiscard]] Room& get_room(const RoomName& room) {
+        return _rooms.at(room);
     }
 
-    Map(std::vector<Room> rooms,
-        std::unordered_map<RoomName, RoomConnections> map);
-
-    std::optional<RoomName> nextRoom(RoomName current_room, Direction direction);
-
-    std::string get_welcome_message(RoomName room);
-
 private:
-    std::unordered_map<RoomName, RoomConnections> _connections{};
     std::unordered_map<RoomName, Room> _rooms{};
 };
 
